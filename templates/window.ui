@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../.designer/img/logo.ico</normaloff>../../../.designer/img/logo.ico</iconset>
+    <normaloff>../../../../../.designer/img/logo.ico</normaloff>../../../../../.designer/img/logo.ico</iconset>
   </property>
   <property name="iconSize">
    <size>
@@ -226,7 +226,7 @@
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>../../../.designer/img/calendarioIcono.jpg</normaloff>../../../.designer/img/calendarioIcono.jpg</iconset>
+                  <normaloff>../../../../.designer/img/calendarioIcono.jpg</normaloff>../../../../.designer/img/calendarioIcono.jpg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -583,7 +583,7 @@
             <item row="4" column="4">
              <layout class="QGridLayout" name="gridLayout_2">
               <item row="0" column="1">
-               <widget class="QCheckBox" name="chcHystorical">
+               <widget class="QCheckBox" name="chcHistorical">
                 <property name="minimumSize">
                  <size>
                   <width>80</width>
@@ -620,6 +620,15 @@
           </item>
           <item>
            <widget class="QTableWidget" name="tblCustomerList">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
             <column>
              <property name="text">
               <string>Surname</string>
@@ -693,8 +702,9 @@
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
-     <string>About</string>
+     <string>Help</string>
     </property>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuTools"/>
@@ -710,6 +720,11 @@
   <action name="actionCustomer_Report">
    <property name="text">
     <string>Customer Report</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

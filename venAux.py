@@ -1,6 +1,7 @@
 import events
 import globals
 from calendar import *
+from about import *
 from datetime import datetime
 
 class Calendar (QtWidgets.QDialog):
@@ -14,3 +15,13 @@ class Calendar (QtWidgets.QDialog):
 
         globals.vencal.Calendar.setSelectedDate((QtCore.QDate(year, month, day)))
         globals.vencal.Calendar.clicked.connect(events.Events.loadData)
+
+
+class About (QtWidgets.QDialog):
+    def __init__(self):
+        super(About, self).__init__()
+        self.ui = Ui_dlgAbout()
+        self.ui.setupUi(self)
+        self.ui.btnCloseAbout.clicked.connect(events.Events.messageAbout)
+
+
