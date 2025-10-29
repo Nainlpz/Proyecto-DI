@@ -7,7 +7,7 @@ from venAux import *
 from window import Ui_MainWindow
 from events import *
 import globals
-
+import styles
 
 class Main(QtWidgets.QMainWindow):
 
@@ -19,6 +19,10 @@ class Main(QtWidgets.QMainWindow):
         # Instance
         globals.vencal = Calendar()
         globals.about = About()
+        globals.dlgOpen = FileDialogOpen()
+
+        # Estilos
+        app.setStyleSheet(styles.load_stylesheet())
 
         # Conexion
         varCli = True
@@ -28,7 +32,10 @@ class Main(QtWidgets.QMainWindow):
 
         # Funcions menu bar
         globals.ui.actionExit.triggered.connect(Events.messageExit)
-        globals.ui.actionAbout.triggered.connect(Events.messageAbout)
+        globals.ui.actionAbout.triggered.connect(Events.openAbout)
+        globals.ui.actionBackup.triggered.connect(Events.saveBackup)
+        globals.ui.actionRestoreBackup.triggered.connect(Events.restoreBackup)
+        globals.ui.actionCustomers.triggered.connect(Events.exportXlsCustomers)
 
         # Funcions line edit
         globals.ui.txtDniCif.editingFinished.connect(Customers.checkDni)
@@ -50,6 +57,9 @@ class Main(QtWidgets.QMainWindow):
         globals.ui.btnDateCli.clicked.connect(Events.openCalendar)
         globals.ui.btnDeleteCli.clicked.connect(Customers.delClient)
         globals.ui.btnSaveCli.clicked.connect(Customers.saveClient)
+        globals.ui.btnReload.clicked.connect(Customers.reloadClient)
+        globals.ui.btnModifyCli.clicked.connect(Customers.modifyClient)
+        globals.ui.btnSearchDni.clicked.connect(Customers.searchClient)
 
         # Funcions tables
         globals.ui.tblCustomerList.clicked.connect(Customers.selectCustomer)

@@ -1,0 +1,186 @@
+/* ===================================================
+   ESTILO GENERAL
+   =================================================== */
+
+QWidget {
+    color: #333;
+    background-color: #f4f6f8;
+}
+
+/* ===================================================
+   LINE EDITS
+   =================================================== */
+
+QLineEdit {
+    border: 1px solid #ccc;
+    selection-background-color: #0078d7;
+    selection-color: #ffffff;
+    background-color: #ffffff;
+}
+
+QLineEdit:focus {
+    border: 1px solid #0078d7;
+    background-color: #fdfdfd;
+    outline: none;
+}
+
+/* ===================================================
+   BOTONES
+   =================================================== */
+
+QPushButton {
+    background-color: #0078d7;
+    color: #ffffff;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #005fa3;
+}
+
+QPushButton:flat {
+    background: transparent;
+    border: none;
+    padding: 4px;
+}
+
+QPushButton:flat:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+}
+
+
+/* ===================================================
+   COMBOBOXES
+   =================================================== */
+
+QComboBox {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 2px;
+}
+
+QComboBox:hover {
+    border: 1px solid #0078d7;
+}
+
+/* ===================================================
+   CHECKBOXES & RADIOBUTTONS
+   =================================================== */
+
+QCheckBox::indicator, QRadioButton::indicator {
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+}
+
+QCheckBox::indicator:checked, QRadioButton::indicator:checked {
+    background-color: #0078d7;
+    border: 2px solid #aaa;
+    padding: 2px;
+}
+
+/* ===================================================
+   TABLAS
+   =================================================== */
+
+QTableWidget {
+    border: 1px solid #d0d7de;
+}
+
+QHeaderView::section {
+    background-color: #f0f2f5;
+    color: #333;
+    padding: 6px;
+    border: none;
+    border-bottom: 2px solid #d0d7de;
+}
+
+#lblListCli {
+    background-color: #f0f2f5;
+}
+
+/* ===================================================
+   MESSAGE BOXES
+   =================================================== */
+QMessageBox {
+    background-color: #ffffff;
+    color: #333;
+}
+
+QMessageBox QLabel {
+    font-size: 11pt;
+    background-color: transparent;
+}
+
+/* ===================================================
+   SCROLLBARS
+   =================================================== */
+
+QScrollBar:vertical {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background: #b0b0b0;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #888;
+}
+
+/* ===================================================
+   MENUBAR
+   =================================================== */
+
+QMenuBar::item {
+    padding: 4px 12px;
+}
+
+QMenuBar::item:selected {
+    background-color: #0078d7;
+    color: #ffffff;
+}
+
+QMenuBar::item:pressed {
+    background-color: #005fa3;
+    color: #ffffff;
+}
+
+/* ===================================================
+   TABLE
+   =================================================== */
+
+QHeaderView::section {
+    background-color: #a8c6e5;
+}
+
+QTableWidget::item:alternate {
+    background-color: #e6f2fb;
+}
+
+QTableWidget::item:hover {
+    background-color: #0078d7;
+    color: #ffffff;
+}
+
+QTableWidget::item:selected {
+    background-color: #0078d7;
+    color: #ffffff;
+}
+
+/* ===================================================
+   QTABWIDGET
+   =================================================== */
+
+QTabBar::tab:selected {
+    background: #0078d7;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+

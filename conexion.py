@@ -88,6 +88,14 @@ class Conexion:
                 while query.next():
                     for i in range (query.record().count()):
                         list.append(query.value(i))
+            if len(list) == 0:
+                query = QtSql.QSqlQuery()
+                query.prepare("SELECT * FROM customers where dni_nie = :dato")
+                query.bindValue(":dato", str(dato))
+                if query.exec():
+                    while query.next():
+                        for i in range (query.record().count()):
+                            list.append(query.value(i))
             return list
         except Exception as error:
             print("error dataOneCustomer", error)
@@ -110,10 +118,10 @@ class Conexion:
     def addClient(newCli):
         try:
             query = QtSql.QSqlQuery()
-            query.prepare("INSERT INTO customers "
-                          "( dni_nie, adddata, surname, name, mail, mobile, address, province, city, invoicetype, historical ) "
-                          "VALUES "
-                          "( :dni_nie, :adddata, :surname, :name, :mail, :mobile, :address, :province, :city, :invoicetype, :historical)")
+            query.prepare("INSERT INTO customers"
+                          " ( dni_nie, adddata, surname, name, mail, mobile, address, province, city, invoicetype, historical )"
+                          " VALUES "
+                          " ( :dni_nie, :adddata, :surname, :name, :mail, :mobile, :address, :province, :city, :invoicetype, :historical)")
             query.bindValue(":dni_nie", str(newCli[0]))
             query.bindValue(":adddata", str(newCli[1]))
             query.bindValue(":surname", str(newCli[2]))
@@ -131,4 +139,30 @@ class Conexion:
                 return False
         except Exception as error:
             print("error addClient", error)
+
+    @staticmethod
+    def modifyClient(dni, modifyCli):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("UPDATE customers SET adddata = :adddata, surname = :surname, name = :name, mail = :mail,"
+                          " mobile = :mobile, address = :address, province = :province, city = :city,"
+                          " invoicetype = :invoicetype, historical = :historical"
+                          " WHERE dni_nie = :dni")
+            query.bindValue(":dni", str(dni))
+            query.bindValue(":adddata", str(modifyCli[0]))
+            query.bindValue(":surname", str(modifyCli[1]))
+            query.bindValue(":name", str(modifyCli[2]))
+            query.bindValue(":mail", str(modifyCli[3]))
+            query.bindValue(":mobile", str(modifyCli[4]))
+            query.bindValue(":address", str(modifyCli[5]))
+            query.bindValue(":province", str(modifyCli[6]))
+            query.bindValue(":city", str(modifyCli[7]))
+            query.bindValue(":historical", str(modifyCli[8]))
+            query.bindValue(":invoicetype", str(modifyCli[9]))
+            if query.exec():
+                return True
+            else:
+                return False
+        except Exception as error:
+            print("error modifyClient", error)
 

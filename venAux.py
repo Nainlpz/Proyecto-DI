@@ -20,8 +20,12 @@ class Calendar (QtWidgets.QDialog):
 class About (QtWidgets.QDialog):
     def __init__(self):
         super(About, self).__init__()
-        self.ui = Ui_dlgAbout()
-        self.ui.setupUi(self)
-        self.ui.btnCloseAbout.clicked.connect(events.Events.messageAbout)
+        globals.about = Ui_dlgAbout()
+        globals.about.setupUi(self)
+        globals.about.btnCloseAbout.clicked.connect(events.Events.closeAbout)
+
+class FileDialogOpen (QtWidgets.QFileDialog):
+    def __init__(self):
+        super(FileDialogOpen, self).__init__()
 
 

@@ -1,12 +1,20 @@
+import csv
+import os
 import sys
 import time
 import conexion
+import customers
+import events
 import globals
+import shutil
+from datetime import datetime
 #from venAux import About
+import zipfile
 from window import *
 
 
 class Events:
+
     @staticmethod
     def messageExit(self=None):
         try:
@@ -28,20 +36,18 @@ class Events:
             print("Error en salida", e)
 
     @staticmethod
-    def messageAbout(self=None):
-        try:
-            globals.about.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
-            globals.about.setWindowTitle("About")
-            globals.about.exec()
-        except Exception as e:
-            print("Error al abrir About:", e)
-
-    @staticmethod
     def openAbout():
         try:
             globals.about.show()
         except Exception as e:
             print("Error al abrir About:", e)
+
+    @staticmethod
+    def closeAbout(self=None):
+        try:
+            globals.about.hide()
+        except Exception as e:
+            print("Error al cerrar About:", e)
 
     @staticmethod
     def openCalendar():
@@ -84,7 +90,7 @@ class Events:
         try:
             header = globals.ui.tblCustomerList.horizontalHeader()
             for i in range(header.count()):
-                if i == 6:
+                if i == 7:
                     header.setSelectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
                 else:
                     header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
@@ -95,3 +101,80 @@ class Events:
                 header_items.setFont(font)
         except Exception as e:
             print("error en resize tabla clients: ", e)
+
+    @staticmethod
+    def saveBackup():
+        try:
+            data = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+            filename = str(data) + "_backup.zip"
+            directory, file = globals.dlgOpen.getSaveFileName(None, "Save Backup File", filename, 'zip')
+            if globals.dlgOpen.accept and file:
+                print(directory)
+                filezip = zipfile.ZipFile(file, 'w')
+                filezip.write('./data/bbdd.sqlite', os.path.basename('bbdd.sqlite'), zipfile.ZIP_DEFLATED)
+                filezip.close()
+                shutil.move(file, directory)
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+                mbox.setWindowTitle("Save Backup")
+                mbox.setText("Save Backup Done")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+        except Exception as e:
+            print("error saveBackup", e)
+
+    def restoreBackup(self):
+        try:
+            filename = globals.dlgOpen.getOpenFileName(None, "Restore Backup File", '', '*.zip;;ALl Files (*)')
+            file = filename[0]
+            if file:
+                with zipfile.ZipFile(file, 'r') as bbdd:
+                    bbdd.extractall(pwd='./data')
+                    shutil.move('bbdd.sqlite', './data')
+                bbdd.close()
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+                mbox.setWindowTitle("Restore Backup")
+                mbox.setText("Restore Backup Done")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                conexion.Conexion.db_conexion(self)
+                Events.loadProv(self)
+                customers.Customers.loadTableCli(self)
+        except Exception as e:
+            print("error restoreBackup: ", e)
+
+    def exportXlsCustomers(self):
+        try:
+            data = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+            filename = str(data) + "_customers.csv"
+            directory, file = globals.dlgOpen.getSaveFileName(None, "Save Backup File", filename, '.csv')
+            var = False
+            if file:
+                records = conexion.Conexion.listCustomers(var)
+                with open(file, "w", newline='', encoding='utf-8') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerow('DNI_NIE', 'Adddata', 'Surname', 'Name', 'eMail', 'Mobile', 'Address',
+                                     'Province', 'City', 'InvoiceType', 'Active')
+                    for record in records:
+                        writer.writerow(record)
+                shutil.move(file, directory)
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+                mbox.setWindowTitle("Export Customers")
+                mbox.setText("Export Customers Done")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+            else:
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
+                mbox.setWindowTitle("Export Customers")
+                mbox.setText("Export Customers Error")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+        except Exception as e:
+            print("error esportXlsCustomers", e)

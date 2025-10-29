@@ -2,13 +2,17 @@ import re
 
 from PyQt6 import QtCore
 
+import events
 import globals
 from conexion import *
+from events import Events
+
 
 class Customers:
     @staticmethod
     def checkDni(self=None):
         try:
+            globals.ui.txtDniCif.editingFinished.disconnect(Customers.checkDni)
             dni = globals.ui.txtDniCif.text()
             dni = str(dni).upper()
             globals.ui.txtDniCif.setText(dni)
@@ -26,13 +30,17 @@ class Customers:
                 else:
                     globals.ui.txtDniCif.setStyleSheet('background-color:#FFC0CB;')
                     globals.ui.txtDniCif.setText(None)
-                    globals.ui.txtDniCif.setFocus()
+                    #globals.ui.txtDniCif.setFocus()
             else:
                 globals.ui.txtDniCif.setStyleSheet('background-color:#FFC0CB;')
                 globals.ui.txtDniCif.setText(None)
-                globals.ui.txtDniCif.setFocus()
+                #globals.ui.txtDniCif.setFocus()
+
         except Exception as error:
             print("error en validar dni ", error)
+
+        finally:
+            globals.ui.txtDniCif.editingFinished.connect(Customers.checkDni)
 
     def capLetter(text, widget):
         try:
@@ -42,24 +50,58 @@ class Customers:
             print("error al capitalizar texto ", error)
 
     def checkEmail(email):
-        regex = r'[\w\.-]+@[\w\.-]+\.\w+$'
-        if re.match(regex, email):
-            globals.ui.txtEmailCli.setStyleSheet('background-color: rgb(255, 255, 220);')
-        else:
-            globals.ui.txtEmailCli.setStyleSheet('background-color: #FFC0CB;')
-            globals.ui.txtEmailCli.setText(None)
-            globals.ui.txtEmailCli.setPlaceholderText("Invalid Email")
-            globals.ui.txtEmailCli.setFocus()
+        try:
+            globals.ui.txtDniCif.editingFinished.disconnect(Customers.checkEmail)
+            regex = r'[\w\.-]+@[\w\.-]+\.\w+$'
+            if re.match(regex, email):
+                globals.ui.txtEmailCli.setStyleSheet('background-color: rgb(255, 255, 220);')
+            else:
+                globals.ui.txtEmailCli.setStyleSheet('background-color: #FFC0CB;')
+                globals.ui.txtEmailCli.setText(None)
+                globals.ui.txtEmailCli.setPlaceholderText("Invalid Email")
+                #globals.ui.txtEmailCli.setFocus()
+        except Exception as error:
+            print("error en validar email ", error)
+        finally:
+            globals.ui.txtEmailCli.editingFinished.connect(Customers.checkEmail)
 
     def checkMobile(number):
-        regex = r'^[67]\d{8}$'
-        if re.match(regex, number):
-            globals.ui.txtMobileCli.setStyleSheet('background-color: rgb(255, 255, 220);')
-        else:
-            globals.ui.txtMobileCli.setStyleSheet('background-color: #FFC0CB;')
-            globals.ui.txtMobileCli.setText(None)
-            globals.ui.txtMobileCli.setPlaceholderText("Invalid Mobile")
-            globals.ui.txtMobileCli.setFocus()
+        try:
+            globals.ui.txtDniCif.editingFinished.disconnect(Customers.checkMobile)
+            regex = r'^[67]\d{8}$'
+            if re.match(regex, number):
+                globals.ui.txtMobileCli.setStyleSheet('background-color: rgb(255, 255, 220);')
+            else:
+                globals.ui.txtMobileCli.setStyleSheet('background-color: #FFC0CB;')
+                globals.ui.txtMobileCli.setText(None)
+                globals.ui.txtMobileCli.setPlaceholderText("Invalid Mobile")
+                #globals.ui.txtMobileCli.setFocus()
+        except Exception as error:
+            print("error en validar mobile ", error)
+        finally:
+            globals.ui.txtDniCif.editingFinished.connect(Customers.checkMobile)
+
+    @staticmethod
+    def reloadClient():
+        try:
+            formcli = [globals.ui.txtDniCif, globals.ui.txtDateCli, globals.ui.txtSurnameCli,
+                      globals.ui.txtNameCli, globals.ui.txtEmailCli, globals.ui.txtMobileCli,
+                      globals.ui.txtAddressCli]
+
+            for i, dato in enumerate(formcli):
+                formcli[i] = dato.setText("")
+            Events.loadProv(self = None)
+            globals.ui.txtDniCif.setEnabled(True)
+            globals.ui.cmbCityCli.clear()
+            globals.ui.rdbFactureOnline.setChecked(True)
+            globals.ui.txtEmailCli.setStyleSheet('background-color: rgb(255, 255, 255);')
+            globals.ui.txtDniCif.setStyleSheet('background-color: rgb(255, 255, 255);')
+            globals.ui.txtMobileCli.setStyleSheet('background-color: rgb(255, 255, 255);')
+            globals.ui.lblWarning.setStyleSheet('background-color: rgb(244, 246, 248);')
+            globals.ui.lblWarning.setText("")
+
+        except Exception as error:
+            print("error en reloadClient", error)
 
     @staticmethod
     def loadTableCli(varCli):
@@ -75,12 +117,17 @@ class Customers:
                 globals.ui.tblCustomerList.setItem(index, 3, QtWidgets.QTableWidgetItem(str(record[7])))
                 globals.ui.tblCustomerList.setItem(index, 4, QtWidgets.QTableWidgetItem(str(record[8])))
                 globals.ui.tblCustomerList.setItem(index, 5, QtWidgets.QTableWidgetItem(str(record[9])))
+                if str(record[10]) == "True":
+                    globals.ui.tblCustomerList.setItem(index, 6, QtWidgets.QTableWidgetItem(str("Alta")))
+                else:
+                    globals.ui.tblCustomerList.setItem(index, 6, QtWidgets.QTableWidgetItem(str("Baja")))
                 globals.ui.tblCustomerList.item(index, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
                 globals.ui.tblCustomerList.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
                 globals.ui.tblCustomerList.item(index, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
                 globals.ui.tblCustomerList.item(index, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
                 globals.ui.tblCustomerList.item(index, 4).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
                 globals.ui.tblCustomerList.item(index, 5).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
+                globals.ui.tblCustomerList.item(index, 6).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
                 index += 1
         except Exception as error:
             print("error en loadTableCli", error)
@@ -103,6 +150,10 @@ class Customers:
                 globals.ui.rdbFacturePaper.setChecked(True)
             else:
                 globals.ui.rdbFactureOnline.setChecked(True)
+
+            globals.status = str(record[10])
+            globals.ui.txtDniCif.setEnabled(False)
+            globals.ui.txtDniCif.setStyleSheet('background-color: rgb(255, 255, 197);')
 
         except Exception as error:
             print("error en selectCustomer", error)
@@ -165,6 +216,60 @@ class Customers:
             print("error saveClient", error)
 
     @staticmethod
+    def modifyClient():
+        try:
+            print(globals.status)
+            if globals.status == str("False"):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setWindowTitle("Information")
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setText("Client not activated. Do you want activate it?")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
+                mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Yes)
+                if mbox.exec():
+                    globals.status = str("True")
+                else:
+                    globals.status = str("False")
+            mbox = QtWidgets.QMessageBox()
+            mbox.setWindowTitle("Modify Data")
+            mbox.setIcon(QtWidgets.QMessageBox.Icon.Question)
+            mbox.setText("Are you sure modify data?")
+            mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No)
+            mbox.setDefaultButton(QtWidgets.QMessageBox.StandardButton.No)
+            if mbox.exec():
+                dni = globals.ui.txtDniCif.text()
+                modifyCli = [globals.ui.txtDateCli.text(), globals.ui.txtSurnameCli.text(),
+                          globals.ui.txtNameCli.text(), globals.ui.txtEmailCli.text(), globals.ui.txtMobileCli.text(),
+                          globals.ui.txtAddressCli.text(), globals.ui.cmbProvinceCli.currentText(),
+                          globals.ui.cmbCityCli.currentText(), globals.status]
+                if globals.ui.rdbFacturePaper.isChecked():
+                    fact = "paper"
+                else:
+                    fact = "electronic"
+                modifyCli.append(fact)
+                if Conexion.modifyClient(dni, modifyCli):
+                    mbox = QtWidgets.QMessageBox()
+                    mbox.setWindowTitle("Information")
+                    mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                    mbox.setText("Client Modified")
+                    mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Yes)
+                    if mbox.exec():
+                        mbox.hide()
+                else:
+                    mbox = QtWidgets.QMessageBox()
+                    mbox.setWindowTitle("Warning")
+                    mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                    mbox.setText("Error modifying data")
+                    mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                    if mbox.exec():
+                        mbox.hide()
+
+            else:
+                mbox.hide()
+        except Exception as error:
+            print("error modifyClient", error)
+
+    @staticmethod
     def HistoricalCli():
         try:
             if globals.ui.chcHistorical.isChecked():
@@ -174,3 +279,36 @@ class Customers:
             Customers.loadTableCli(var)
         except Exception as error:
             print("error HistoricalCli", error)
+
+    @staticmethod
+    def searchClient():
+        try:
+            dni = globals.ui.txtDniCif.text()
+            record = Conexion.dataOneCustomer(str(dni))
+            if record == Conexion.dataOneCustomer(str(dni)):
+                if not record:
+                    mbox = QtWidgets.QMessageBox()
+                    mbox.setWindowTitle("Information")
+                    mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                    mbox.setText("Client not exists")
+                    if mbox.exec():
+                        mbox.hide()
+                        Customers.reloadClient()
+                else:
+                    box = [globals.ui.txtDniCif, globals.ui.txtDateCli, globals.ui.txtSurnameCli,
+                           globals.ui.txtNameCli,globals.ui.txtEmailCli, globals.ui.txtMobileCli,
+                           globals.ui.txtAddressCli]
+                    for i in range(len(box)):
+                        box[i].setText(str(record[i]))
+                    globals.ui.cmbProvinceCli.setCurrentText(record[7])
+                    globals.ui.cmbCityCli.setCurrentText(record[8])
+                    if str(record[9]) == 'paper':
+                        globals.ui.rdbFacturePaper.setChecked(True)
+                    else:
+                        globals.ui.rdbFactureOnline.setChecked(True)
+                    if str(record[10]) == "False":
+                        globals.ui.lblWarning.setText("Historical Client")
+                        globals.ui.lblWarning.setStyleSheet("background-color: rgb(255, 255, 200); color: red")
+
+        except Exception as error:
+            print("error searchClient", error)
