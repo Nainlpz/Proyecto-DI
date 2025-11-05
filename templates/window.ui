@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1256</width>
-    <height>762</height>
+    <height>735</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,13 +81,13 @@
              <widget class="QLineEdit" name="txtNameCli">
               <property name="minimumSize">
                <size>
-                <width>150</width>
+                <width>180</width>
                 <height>25</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>150</width>
+                <width>180</width>
                 <height>25</height>
                </size>
               </property>
@@ -529,6 +529,9 @@
                 <height>25</height>
                </size>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
              </widget>
             </item>
             <item row="4" column="2">
@@ -550,9 +553,6 @@
                 <property name="text">
                  <string>Paper billing</string>
                 </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">btnGroupInvoice</string>
-                </attribute>
                </widget>
               </item>
               <item row="0" column="0">
@@ -572,9 +572,6 @@
                 <property name="text">
                  <string>E-invoice</string>
                 </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">btnGroupInvoice</string>
-                </attribute>
                </widget>
               </item>
               <item row="0" column="2">
@@ -681,6 +678,9 @@
                   <height>25</height>
                  </size>
                 </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
                </widget>
               </item>
               <item>
@@ -762,6 +762,9 @@
               <width>1200</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
             </property>
             <property name="alternatingRowColors">
              <bool>true</bool>
@@ -896,6 +899,26 @@
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionBackup"/>
+   <addaction name="actionRestoreBackup"/>
+   <addaction name="actionExit"/>
+  </widget>
   <action name="actionExit">
    <property name="icon">
     <iconset>
@@ -951,29 +974,6 @@
    </property>
   </action>
  </widget>
- <tabstops>
-  <tabstop>txtDniCif</tabstop>
-  <tabstop>txtDateCli</tabstop>
-  <tabstop>btnDateCli</tabstop>
-  <tabstop>txtSurnameCli</tabstop>
-  <tabstop>txtNameCli</tabstop>
-  <tabstop>txtEmailCli</tabstop>
-  <tabstop>txtMobileCli</tabstop>
-  <tabstop>txtAddressCli</tabstop>
-  <tabstop>cmbProvinceCli</tabstop>
-  <tabstop>cmbCityCli</tabstop>
-  <tabstop>rdbFactureOnline</tabstop>
-  <tabstop>rdbFacturePaper</tabstop>
-  <tabstop>btnSaveCli</tabstop>
-  <tabstop>btnModifyCli</tabstop>
-  <tabstop>btnDeleteCli</tabstop>
-  <tabstop>chcHistorical</tabstop>
-  <tabstop>btnReload</tabstop>
-  <tabstop>btnSearchDni</tabstop>
- </tabstops>
  <resources/>
  <connections/>
- <buttongroups>
-  <buttongroup name="btnGroupInvoice"/>
- </buttongroups>
 </ui>

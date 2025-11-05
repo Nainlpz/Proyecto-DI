@@ -21,7 +21,7 @@ class Main(QtWidgets.QMainWindow):
         globals.about = About()
         globals.dlgOpen = FileDialogOpen()
 
-        # Estilos
+        # Styles
         app.setStyleSheet(styles.load_stylesheet())
 
         # Conexion
@@ -30,14 +30,14 @@ class Main(QtWidgets.QMainWindow):
         Customers.loadTableCli(varCli)
         Events.resizeTabCustomer(self)
 
-        # Funcions menu bar
+        # Functions menu bar
         globals.ui.actionExit.triggered.connect(Events.messageExit)
         globals.ui.actionAbout.triggered.connect(Events.openAbout)
         globals.ui.actionBackup.triggered.connect(Events.saveBackup)
         globals.ui.actionRestoreBackup.triggered.connect(Events.restoreBackup)
         globals.ui.actionCustomers.triggered.connect(Events.exportXlsCustomers)
 
-        # Funcions line edit
+        # Functions line edit
         globals.ui.txtDniCif.editingFinished.connect(Customers.checkDni)
         globals.ui.txtNameCli.editingFinished.connect(lambda: Customers.capLetter(globals.ui.txtNameCli.text(), globals.ui.txtNameCli))
         globals.ui.txtSurnameCli.editingFinished.connect(lambda: Customers.capLetter(globals.ui.txtSurnameCli.text(), globals.ui.txtSurnameCli))
@@ -45,15 +45,15 @@ class Main(QtWidgets.QMainWindow):
         globals.ui.txtEmailCli.editingFinished.connect(lambda: Customers.checkEmail(globals.ui.txtEmailCli.text()))
         globals.ui.txtMobileCli.editingFinished.connect(lambda: Customers.checkMobile(globals.ui.txtMobileCli.text()))
 
-        # Funtions Historial
+        # Functions Historical
         globals.ui.chcHistorical.stateChanged.connect(Customers.HistoricalCli)
 
-        # Funcions combobox
+        # Functions combobox
         Events.loadProv(self)
         globals.ui.cmbProvinceCli.currentIndexChanged.connect(Events.loadMuni)
 
 
-        # Funcions buttons
+        # Functions buttons
         globals.ui.btnDateCli.clicked.connect(Events.openCalendar)
         globals.ui.btnDeleteCli.clicked.connect(Customers.delClient)
         globals.ui.btnSaveCli.clicked.connect(Customers.saveClient)
@@ -61,8 +61,11 @@ class Main(QtWidgets.QMainWindow):
         globals.ui.btnModifyCli.clicked.connect(Customers.modifyClient)
         globals.ui.btnSearchDni.clicked.connect(Customers.searchClient)
 
-        # Funcions tables
+        # Functions tables
         globals.ui.tblCustomerList.clicked.connect(Customers.selectCustomer)
+        
+        # Functions
+        Events.loadStatusBar(self)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

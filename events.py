@@ -178,3 +178,14 @@ class Events:
                 mbox.exec()
         except Exception as e:
             print("error esportXlsCustomers", e)
+
+    def loadStatusBar(self):
+        try:
+            data = datetime.now().strftime('%d/%m/%Y')
+            self.labelstatus = QtWidgets.QLabel(self)
+            self.labelstatus.setText("Date: " + data + " - Version 0.0.1")
+            self.labelstatus.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+            self.labelstatus.setStyleSheet("color: white; font-weight: bold; font-size: 9px;")
+            globals.ui.statusbar.addPermanentWidget(self.labelstatus, 1)
+        except Exception as e:
+            print("error loadStatusBar: ", e)

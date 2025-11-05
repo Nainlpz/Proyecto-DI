@@ -309,6 +309,9 @@ class Customers:
                     if str(record[10]) == "False":
                         globals.ui.lblWarning.setText("Historical Client")
                         globals.ui.lblWarning.setStyleSheet("background-color: rgb(255, 255, 200); color: red")
+                    else:
+                        globals.ui.lblWarning.setText("")
+                        globals.ui.lblWarning.setStyleSheet("background-color: rgb(244, 246, 248);")
 
         except Exception as error:
             print("error searchClient", error)

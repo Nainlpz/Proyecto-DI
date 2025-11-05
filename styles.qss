@@ -1,13 +1,4 @@
 /* ===================================================
-   ESTILO GENERAL
-   =================================================== */
-
-QWidget {
-    color: #333;
-    background-color: #f4f6f8;
-}
-
-/* ===================================================
    LINE EDITS
    =================================================== */
 
@@ -24,6 +15,10 @@ QLineEdit:focus {
     outline: none;
 }
 
+QLineEdit:hover {
+    border: 1px solid #0078d7;
+}
+
 /* ===================================================
    BOTONES
    =================================================== */
@@ -31,7 +26,7 @@ QLineEdit:focus {
 QPushButton {
     background-color: #0078d7;
     color: #ffffff;
-    border-radius: 6px;
+    border-radius: 0px;
     padding: 4px 10px;
     font-weight: bold;
 }
@@ -51,6 +46,13 @@ QPushButton:flat:hover {
     border-radius: 6px;
 }
 
+#btnDeleteCli {
+    background-color: #E74C3C;
+}
+
+#btnDeleteCli:hover {
+    background-color: #b71c1c;
+}
 
 /* ===================================================
    COMBOBOXES
@@ -70,10 +72,16 @@ QComboBox:hover {
    CHECKBOXES & RADIOBUTTONS
    =================================================== */
 
-QCheckBox::indicator, QRadioButton::indicator {
+QRadioButton::indicator {
     border-radius: 8px;
     border: 1px solid #aaa;
-    background-color: #fff;
+    background-color: #ffffff;
+}
+
+QCheckBox::indicator {
+    border-radius: 4px;
+    border: 1px solid #aaa;
+    background-color: #ffffff;
 }
 
 QCheckBox::indicator:checked, QRadioButton::indicator:checked {
@@ -87,6 +95,8 @@ QCheckBox::indicator:checked, QRadioButton::indicator:checked {
    =================================================== */
 
 QTableWidget {
+    color: #333;
+    background-color: #f4f6f8;
     border: 1px solid #d0d7de;
 }
 
@@ -99,14 +109,14 @@ QHeaderView::section {
 }
 
 #lblListCli {
-    background-color: #f0f2f5;
+    font-weight: bold;
 }
 
 /* ===================================================
    MESSAGE BOXES
    =================================================== */
 QMessageBox {
-    background-color: #ffffff;
+    background-color: #f4f6f8;
     color: #333;
 }
 
@@ -164,23 +174,67 @@ QTableWidget::item:alternate {
 }
 
 QTableWidget::item:hover {
-    background-color: #0078d7;
-    color: #ffffff;
+    background-color: rgb(255, 255, 200);
+    color: #000;
 }
 
 QTableWidget::item:selected {
-    background-color: #0078d7;
-    color: #ffffff;
+    background-color: rgb(255, 255, 200);
+    color: #000;
 }
 
 /* ===================================================
    QTABWIDGET
    =================================================== */
 
+QTabWidget::pane {
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 4px;
+    background: #f4f6f8;
+}
+
+QTabBar::tab {
+    background: #f2f2f2;
+    border: 1px solid #bfbfbf;
+    border-radius: 8px;
+    padding: 6px 14px;
+    margin-right: 2px;
+}
+
 QTabBar::tab:selected {
     background: #0078d7;
     color: #ffffff;
     font-weight: bold;
+    border: 1px solid #005fa3;
 }
 
+QTabBar::tab:hover {
+    background: #0078d7;
+    color: #ffffff;
+}
 
+QMenu::item {
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #f4f6f8;
+    padding: 4px;
+}
+
+/* ===================================================
+   QSTATUSBAR
+   =================================================== */
+
+QStatusBar {
+    background-color: #0078d7;
+    color: white;
+}
+
+/* ===================================================
+   PANEL PRINCIPAL
+   =================================================== */
+
+#panelMain {
+    color: #333;
+    background-color: #f4f6f8;
+}
