@@ -3,6 +3,7 @@ import sys
 
 from conexion import Conexion
 from customers import *
+from reports import *
 from venAux import *
 from window import Ui_MainWindow
 from events import *
@@ -20,6 +21,7 @@ class Main(QtWidgets.QMainWindow):
         globals.vencal = Calendar()
         globals.about = About()
         globals.dlgOpen = FileDialogOpen()
+        self.reports = Reports()
 
         # Styles
         app.setStyleSheet(styles.load_stylesheet())
@@ -30,12 +32,17 @@ class Main(QtWidgets.QMainWindow):
         Customers.loadTableCli(varCli)
         Events.resizeTabCustomer(self)
 
+        # Como cargar uncombo desde un array
+        iva = ["4%", "10%", "21%", ]
+        globals.ui.cmbIVA.addItems(iva)
+
         # Functions menu bar
         globals.ui.actionExit.triggered.connect(Events.messageExit)
         globals.ui.actionAbout.triggered.connect(Events.openAbout)
         globals.ui.actionBackup.triggered.connect(Events.saveBackup)
         globals.ui.actionRestoreBackup.triggered.connect(Events.restoreBackup)
         globals.ui.actionCustomers.triggered.connect(Events.exportXlsCustomers)
+        globals.ui.actionCustomer_Report.triggered.connect(self.reports.reportCustomers)
 
         # Functions line edit
         globals.ui.txtDniCif.editingFinished.connect(Customers.checkDni)
