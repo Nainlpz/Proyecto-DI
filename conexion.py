@@ -166,3 +166,67 @@ class Conexion:
         except Exception as error:
             print("error modifyClient", error)
 
+
+    ### PRODUCTS ###
+
+    @staticmethod
+    def listProducts():
+        list = []
+        query = QtSql.QSqlQuery()
+        query.prepare("SELECT * FROM products")
+        if query.exec():
+            while query.next():
+                row = [query.value(i) for i in range(query.record().count())]
+                list.append(row)
+        return list
+
+    @staticmethod
+    def dataOneProduct(dato):
+        try:
+            list = []
+            dato = str(dato).strip()
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM products where Code = :dato")
+            query.bindValue(":dato", dato)
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        list.append(query.value(i))
+            return list
+
+        except Exception as error:
+            print("error dataOneCustomer", error)
+
+    @staticmethod
+    def addProduct(newProduct):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("INSERT INTO products"
+                          " ( Code, Name, Stock, Family, UnitPrice )"
+                          " VALUES "
+                          " ( :code, :name, :stock, :family, :unitPrice)")
+            query.bindValue(":code", str(newProduct[0]))
+            query.bindValue(":name", str(newProduct[1]))
+            query.bindValue(":stock", str(newProduct[2]))
+            query.bindValue(":family", str(newProduct[3]))
+            query.bindValue(":unitPrice", str(newProduct[4]))
+
+            if query.exec():
+                return True
+            else:
+                return False
+        except Exception as error:
+            print("error addProduct", error)
+
+    @staticmethod
+    def deleteProduct(code):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("DELETE FROM products WHERE Code = :code")
+            query.bindValue(":code", code)
+            if query.exec():
+                return True
+            else:
+                return False
+        except Exception as error:
+            print("error deleteProduct", error)

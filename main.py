@@ -3,6 +3,7 @@ import sys
 
 from conexion import Conexion
 from customers import *
+from products import Products
 from reports import *
 from venAux import *
 from window import Ui_MainWindow
@@ -30,11 +31,12 @@ class Main(QtWidgets.QMainWindow):
         varCli = True
         Conexion.db_conexion(self)
         Customers.loadTableCli(varCli)
+        Products.loadTableProducts()
         Events.resizeTabCustomer(self)
 
-        # Como cargar uncombo desde un array
-        iva = ["4%", "10%", "21%", ]
-        globals.ui.cmbIVA.addItems(iva)
+        # Como cargar un combo desde un array
+        family = ["Foods", "Furniture", "Clothes", "Electronic"]
+        globals.ui.cmbFamily.addItems(family)
 
         # Functions menu bar
         globals.ui.actionExit.triggered.connect(Events.messageExit)
@@ -68,8 +70,12 @@ class Main(QtWidgets.QMainWindow):
         globals.ui.btnModifyCli.clicked.connect(Customers.modifyClient)
         globals.ui.btnSearchDni.clicked.connect(Customers.searchClient)
 
+        globals.ui.btnSaveProduct.clicked.connect(Products.saveProduct)
+        globals.ui.btnDeleteProduct.clicked.connect(Products.delProduct)
+
         # Functions tables
         globals.ui.tblCustomerList.clicked.connect(Customers.selectCustomer)
+        globals.ui.tblProductList.clicked.connect(Products.selectProduct)
         
         # Functions
         Events.loadStatusBar(self)
