@@ -10,6 +10,7 @@ from window import Ui_MainWindow
 from events import *
 import globals
 import styles
+from invoice import Invoice
 
 class Main(QtWidgets.QMainWindow):
 
@@ -33,10 +34,9 @@ class Main(QtWidgets.QMainWindow):
         Customers.loadTableCli(varCli)
         Products.loadTableProducts()
         Events.resizeTabCustomer(self)
-
-        # Como cargar un combo desde un array
-        family = ["Foods", "Furniture", "Clothes", "Electronic"]
-        globals.ui.cmbFamily.addItems(family)
+        Events.resizeTabProducts()
+        Products.cargaFamilypro()
+        Products.loadTableProducts()
 
         # Functions menu bar
         globals.ui.actionExit.triggered.connect(Events.messageExit)
@@ -53,6 +53,14 @@ class Main(QtWidgets.QMainWindow):
         globals.ui.txtAddressCli.editingFinished.connect(lambda: Customers.capLetter(globals.ui.txtAddressCli.text(), globals.ui.txtAddressCli))
         globals.ui.txtEmailCli.editingFinished.connect(lambda: Customers.checkEmail(globals.ui.txtEmailCli.text()))
         globals.ui.txtMobileCli.editingFinished.connect(lambda: Customers.checkMobile(globals.ui.txtMobileCli.text()))
+
+        globals.ui.txtUnitPrice.editingFinished.connect(lambda: Products.comaPunto(globals.ui.txtUnitPrice.text()))
+        globals.ui.textNameProduct.editingFinished.connect(lambda: Customers.capLetter(globals.ui.textNameProduct.text(), globals.ui.textNameProduct))
+        globals.ui.txtCode.setEnabled(False)
+        globals.ui.txtCode.setStyleSheet('background-color: rgb(255, 255, 197);')
+
+        globals.ui.txtDniFactura.editingFinished.connect(Invoice.searchInvoice)
+        globals.ui.txtDniFactura.editingFinished.connect(lambda: Customers.capLetter(globals.ui.txtDniFactura.text(), globals.ui.txtDniFactura))
 
         # Functions Historical
         globals.ui.chcHistorical.stateChanged.connect(Customers.HistoricalCli)
@@ -72,6 +80,11 @@ class Main(QtWidgets.QMainWindow):
 
         globals.ui.btnSaveProduct.clicked.connect(Products.saveProduct)
         globals.ui.btnDeleteProduct.clicked.connect(Products.delProduct)
+        globals.ui.btnModifyProduct.clicked.connect(Products.modifyProduct)
+        globals.ui.btnReloadProducts.clicked.connect(Products.cleanProduct)
+
+        globals.ui.btnReloadFactura.clicked.connect(Invoice.reloadInvoice)
+        globals.ui.btnSaveFactura.clicked.connect(Invoice.saveInvoice)
 
         # Functions tables
         globals.ui.tblCustomerList.clicked.connect(Customers.selectCustomer)

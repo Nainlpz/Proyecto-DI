@@ -202,19 +202,20 @@ class Conexion:
         try:
             query = QtSql.QSqlQuery()
             query.prepare("INSERT INTO products"
-                          " ( Code, Name, Stock, Family, UnitPrice )"
+                          " ( Name, Stock, Family, UnitPrice )"
                           " VALUES "
-                          " ( :code, :name, :stock, :family, :unitPrice)")
-            query.bindValue(":code", str(newProduct[0]))
-            query.bindValue(":name", str(newProduct[1]))
-            query.bindValue(":stock", str(newProduct[2]))
-            query.bindValue(":family", str(newProduct[3]))
-            query.bindValue(":unitPrice", str(newProduct[4]))
+                          " ( :name, :stock, :family, :unitPrice)")
+
+            query.bindValue(":name", str(newProduct[0]))
+            query.bindValue(":stock", str(newProduct[1]))
+            query.bindValue(":family", str(newProduct[2]))
+            query.bindValue(":unitPrice", str(newProduct[3]))
 
             if query.exec():
                 return True
             else:
                 return False
+
         except Exception as error:
             print("error addProduct", error)
 
@@ -223,10 +224,62 @@ class Conexion:
         try:
             query = QtSql.QSqlQuery()
             query.prepare("DELETE FROM products WHERE Code = :code")
-            query.bindValue(":code", code)
+            query.bindValue(":code", int(code))
             if query.exec():
                 return True
             else:
                 return False
         except Exception as error:
             print("error deleteProduct", error)
+
+    def modifyProduct(id, modpro):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("UPDATE products SET Name= :name, Family =:family, Stock = :stock, "
+                          " UnitPrice =:unitPrice where Code = :code" )
+            query.bindValue(":code", int(id))
+            query.bindValue(":name", str(modpro[0]))
+            query.bindValue(":family", str(modpro[1]))
+            query.bindValue(":stock", int(modpro[2]))
+            price = modpro[3].replace("€", "")
+            query.bindValue(":unitPrice", str(price))
+            if query.exec():
+                return True
+            else:
+                return False
+
+        except Exception as error:
+            print("error modifyPro", error)
+
+    ### INVOICE ###
+
+    @staticmethod
+    def searchClient(dni):
+        try:
+            dni = str(dni).upper()
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM customers WHERE dni_nie = :dni")
+            query.bindValue(":dni", str(dni))
+            if query.exec():
+                if query.next():
+                    return True
+                else:
+                    return False
+
+        except Exception as error:
+            print("error searchClient", error)
+
+    @staticmethod
+    def insertInvoice(dni, data):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("INSERT INTO invoices (dninie, data) values (:dni, :data)")
+            query.bindValue(":dni", str(dni))
+            query.bindValue(":data", str(data))
+            if query.exec():
+                return True
+            else:
+                return False
+
+        except Exception as error:
+            print("error insertInvoice", error)

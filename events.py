@@ -103,6 +103,23 @@ class Events:
             print("error en resize tabla clients: ", e)
 
     @staticmethod
+    def resizeTabProducts():
+        try:
+            header = globals.ui.tblProductList.horizontalHeader()
+            for i in range(header.count()):
+                if i == 5:
+                    header.setSelectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.ResizeToContents)
+                else:
+                    header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+                header_items = globals.ui.tblProductList.horizontalHeaderItem(i)
+                # negrita cabecera
+                font = header_items.font()
+                font.setBold(True)
+                header_items.setFont(font)
+        except Exception as e:
+            print("error en resize tabla clients: ", e)
+
+    @staticmethod
     def saveBackup():
         try:
             data = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')

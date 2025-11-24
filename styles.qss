@@ -112,6 +112,10 @@ QHeaderView::section {
     font-weight: bold;
 }
 
+#lblListProducts {
+    font-weight: bold;
+}
+
 /* ===================================================
    MESSAGE BOXES
    =================================================== */
