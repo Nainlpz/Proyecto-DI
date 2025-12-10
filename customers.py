@@ -11,6 +11,13 @@ from events import Events
 class Customers:
     @staticmethod
     def checkDni(self=None):
+        """
+
+        Módulo para checkear el DNI
+        :param self: None
+        :type self: None
+
+        """
         try:
             globals.ui.txtDniCif.editingFinished.disconnect(Customers.checkDni)
             dni = globals.ui.txtDniCif.text()
@@ -43,13 +50,27 @@ class Customers:
             globals.ui.txtDniCif.editingFinished.connect(Customers.checkDni)
 
     def capLetter(text, widget):
+        """
+
+        Modulo para capitalizar el texto de los input
+        :param widget: texto y widget input
+        :type widget: basestring y widger inpur
+
+        """
         try:
             text = text.title()
             widget.setText(text)
         except Exception as error:
             print("error al capitalizar texto ", error)
 
+    @staticmethod
     def checkEmail(email):
+        """
+
+        Modulo para checkear el email con expresión regular
+        :param email: correo electronico
+        :type email: basestring
+        """
         try:
             globals.ui.txtDniCif.editingFinished.disconnect(Customers.checkEmail)
             regex = r'[\w\.-]+@[\w\.-]+\.\w+$'
@@ -65,7 +86,15 @@ class Customers:
         finally:
             globals.ui.txtEmailCli.editingFinished.connect(Customers.checkEmail)
 
+    @staticmethod
     def checkMobile(number):
+        """
+
+        Modulo para checkear el movil segun la legislacion española
+        :param number: nº movil cliente
+        :type number: basestring
+
+        """
         try:
             globals.ui.txtDniCif.editingFinished.disconnect(Customers.checkMobile)
             regex = r'^[67]\d{8}$'
@@ -83,6 +112,11 @@ class Customers:
 
     @staticmethod
     def reloadClient():
+        """
+
+        Modulo para vaciar el formulario del cliente
+
+        """
         try:
             formcli = [globals.ui.txtDniCif, globals.ui.txtDateCli, globals.ui.txtSurnameCli,
                       globals.ui.txtNameCli, globals.ui.txtEmailCli, globals.ui.txtMobileCli,
@@ -105,6 +139,13 @@ class Customers:
 
     @staticmethod
     def loadTableCli(varCli):
+        """
+
+        Modulo para cargar la tabla clientes
+        :param varCli: indica si quiero todos los usuarios o solo activos
+        :type varCli: bool
+
+        """
         try:
             listTabCustomers = Conexion.listCustomers(varCli)
             #print(listTabCustomers)
@@ -134,6 +175,11 @@ class Customers:
 
     @staticmethod
     def selectCustomer():
+        """
+
+        Modulo para seleccionar un cliente y cargarlo en el formulario
+
+        """
         try:
             row = globals.ui.tblCustomerList.selectedItems()
             data = [dato.text() for dato in row]
@@ -160,6 +206,12 @@ class Customers:
 
     @staticmethod
     def delClient(self):
+        """
+
+        Modulo para eliminar a un cliente y marcarlo como historico
+        :param self: None
+        :type self: None
+        """
         try:
             mbox = QtWidgets.QMessageBox()
             mbox.setWindowTitle("Warning")
@@ -189,6 +241,11 @@ class Customers:
 
     @staticmethod
     def saveClient():
+        """
+
+        Modulo para guardar los datos en la bbdd
+
+        """
         try:
             newCli = [globals.ui.txtDniCif.text(), globals.ui.txtDateCli.text(), globals.ui.txtSurnameCli.text(),
                       globals.ui.txtNameCli.text(), globals.ui.txtEmailCli.text(), globals.ui.txtMobileCli.text(),
@@ -217,6 +274,11 @@ class Customers:
 
     @staticmethod
     def modifyClient():
+        """
+
+        Modulo para guardar modificaciones de un cliente en la bbdd
+
+        """
         try:
             print(globals.status)
             if globals.status == str("False"):
@@ -271,6 +333,11 @@ class Customers:
 
     @staticmethod
     def HistoricalCli():
+        """
+
+        Modulo para cargar la tabla clientes si queremos historico o no
+
+        """
         try:
             if globals.ui.chcHistorical.isChecked():
                 var = False
@@ -282,6 +349,11 @@ class Customers:
 
     @staticmethod
     def searchClient():
+        """
+
+        Modulo para buscar un cliente por su dni y cargarlo en el formulario
+
+        """
         try:
             dni = globals.ui.txtDniCif.text()
             record = Conexion.dataOneCustomer(str(dni))

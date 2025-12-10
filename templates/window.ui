@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1343</width>
+    <width>1726</width>
     <height>988</height>
    </rect>
   </property>
@@ -27,6 +27,18 @@
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <widget class="QTabWidget" name="panelMain">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="currentIndex">
        <number>2</number>
       </property>
@@ -329,7 +341,7 @@
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>../img/calendarioIcono.jpg</normaloff>../img/calendarioIcono.jpg</iconset>
+                  <normaloff>../../../../../.designer/img/calendarioIcono.jpg</normaloff>../../../../../.designer/img/calendarioIcono.jpg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -404,7 +416,7 @@
                   </property>
                   <property name="icon">
                    <iconset>
-                    <normaloff>../img/reload.png</normaloff>../img/reload.png</iconset>
+                    <normaloff>../../../../../.designer/img/reload.png</normaloff>../../../../../.designer/img/reload.png</iconset>
                   </property>
                   <property name="flat">
                    <bool>true</bool>
@@ -705,7 +717,7 @@
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>../img/lupa.png</normaloff>../img/lupa.png</iconset>
+                  <normaloff>../../../../../.designer/img/lupa.png</normaloff>../../../../../.designer/img/lupa.png</iconset>
                 </property>
                 <property name="flat">
                  <bool>true</bool>
@@ -926,7 +938,7 @@
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>../img/reload.png</normaloff>../img/reload.png</iconset>
+                  <normaloff>../../../../../.designer/img/reload.png</normaloff>../../../../../.designer/img/reload.png</iconset>
                 </property>
                 <property name="flat">
                  <bool>true</bool>
@@ -1350,296 +1362,18 @@
        <attribute name="title">
         <string>Invoicing</string>
        </attribute>
-       <widget class="QFrame" name="frame_2">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>10</y>
-          <width>291</width>
-          <height>791</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>1</number>
-        </property>
-        <widget class="QTableWidget" name="tblFactura">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>220</y>
-           <width>271</width>
-           <height>561</height>
-          </rect>
-         </property>
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>true</bool>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
-         </property>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>89</number>
-         </attribute>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>Nº Factura</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>DNI</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Fecha</string>
-          </property>
-         </column>
-        </widget>
-        <widget class="QWidget" name="layoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>30</x>
-           <y>20</y>
-           <width>216</width>
-           <height>146</height>
-          </rect>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_13">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Nº Factura:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QLabel" name="lblNumFactura">
-            <property name="minimumSize">
-             <size>
-              <width>150</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(252, 255, 190);</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Fecha</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>DNI Cliente:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" colspan="2">
-           <widget class="QLineEdit" name="txtDniFactura">
-            <property name="minimumSize">
-             <size>
-              <width>150</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QPushButton" name="btnReloadFactura">
-            <property name="minimumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>../img/reload.png</normaloff>../img/reload.png</iconset>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" colspan="2">
-           <widget class="QLabel" name="lblFechaFactura">
-            <property name="minimumSize">
-             <size>
-              <width>150</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>150</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(252, 255, 190);</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QPushButton" name="btnSaveFactura">
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>50</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string>Save</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_11">
-            <property name="minimumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>25</width>
-              <height>25</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="">
-        <property name="geometry">
-         <rect>
-          <x>420</x>
-          <y>70</y>
-          <width>821</width>
-          <height>591</height>
+          <x>480</x>
+          <y>20</y>
+          <width>1210</width>
+          <height>811</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout_15">
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_12">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_6">
-             <property name="minimumSize">
-              <size>
-               <width>50</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>Invoice Type</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="1">
             <widget class="QLabel" name="lblNameFactura">
              <property name="minimumSize">
@@ -1662,6 +1396,32 @@
              </property>
              <property name="margin">
               <number>0</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Invoice Type</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Name</string>
              </property>
             </widget>
            </item>
@@ -1734,6 +1494,25 @@
              </property>
             </widget>
            </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Status</string>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="3">
             <widget class="QLabel" name="lblMobileFactura">
              <property name="minimumSize">
@@ -1756,6 +1535,48 @@
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Mobile</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QPushButton" name="btnSaveSale">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../img/check.jpg</normaloff>../img/check.jpg</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1784,62 +1605,14 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="minimumSize">
-              <size>
-               <width>50</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Status</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Mobile</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </item>
-         <item row="2" column="1">
+         <item row="4" column="1">
           <layout class="QGridLayout" name="gridLayout_14">
            <item row="0" column="0">
             <widget class="QLabel" name="label_14">
              <property name="text">
               <string>Subtotal:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="lblSubtotal">
-             <property name="minimumSize">
-              <size>
-               <width>120</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>120</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(252, 255, 190);</string>
-             </property>
-             <property name="text">
-              <string/>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1850,6 +1623,9 @@
             <widget class="QLabel" name="label_13">
              <property name="text">
               <string>IVA:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
@@ -1878,14 +1654,42 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
+           <item row="0" column="1">
+            <widget class="QLabel" name="lblSubtotal">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(252, 255, 190);</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
             <widget class="QLabel" name="label_12">
              <property name="text">
               <string>Total:</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
             </widget>
            </item>
-           <item row="2" column="1">
+           <item row="3" column="1">
             <widget class="QLabel" name="lblTotal">
              <property name="minimumSize">
               <size>
@@ -1912,11 +1716,343 @@
            </item>
           </layout>
          </item>
-         <item row="1" column="0" colspan="2">
-          <widget class="QTableWidget" name="tblDatosFactura">
+         <item row="3" column="0" colspan="2">
+          <widget class="QTableWidget" name="tblSales">
+           <property name="minimumSize">
+            <size>
+             <width>1200</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>1200</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="editTriggers">
             <set>QAbstractItemView::AllEditTriggers</set>
            </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>30</number>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>idProduct</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Product</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Unit Price</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Amount</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Total</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_15">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="gridLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>20</y>
+          <width>291</width>
+          <height>811</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_16">
+         <item row="0" column="0">
+          <widget class="QFrame" name="frame_2">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="lineWidth">
+            <number>1</number>
+           </property>
+           <widget class="QTableWidget" name="tblFactura">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>220</y>
+              <width>271</width>
+              <height>581</height>
+             </rect>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <attribute name="horizontalHeaderDefaultSectionSize">
+             <number>89</number>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <column>
+             <property name="text">
+              <string>Nº Factura</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>DNI</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Fecha</string>
+             </property>
+            </column>
+           </widget>
+           <widget class="QWidget" name="layoutWidget">
+            <property name="geometry">
+             <rect>
+              <x>30</x>
+              <y>20</y>
+              <width>216</width>
+              <height>146</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_13">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Nº Factura:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="2">
+              <widget class="QLabel" name="lblNumFactura">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(252, 255, 190);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Fecha</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>DNI Cliente:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1" colspan="2">
+              <widget class="QLineEdit" name="txtDniFactura">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QPushButton" name="btnReloadFactura">
+               <property name="minimumSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../../../../../.designer/img/reload.png</normaloff>../../../../../.designer/img/reload.png</iconset>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QLabel" name="lblFechaFactura">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(252, 255, 190);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QPushButton" name="btnSaveFactura">
+               <property name="minimumSize">
+                <size>
+                 <width>75</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>75</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string>Save</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="label_11">
+               <property name="minimumSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -1931,7 +2067,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1343</width>
+     <width>1726</width>
      <height>21</height>
     </rect>
    </property>
@@ -1997,7 +2133,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset>
-     <normalon>../img/exit.png</normalon>
+     <normalon>../../../../../.designer/img/exit.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -2020,7 +2156,7 @@
   <action name="actionBackup">
    <property name="icon">
     <iconset>
-     <normalon>../img/backup.png</normalon>
+     <normalon>../../../../../.designer/img/backup.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -2033,7 +2169,7 @@
   <action name="actionRestoreBackup">
    <property name="icon">
     <iconset>
-     <normalon>../img/restore.png</normalon>
+     <normalon>../../../../../.designer/img/restore.png</normalon>
     </iconset>
    </property>
    <property name="text">

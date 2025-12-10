@@ -10,6 +10,8 @@ import shutil
 from datetime import datetime
 #from venAux import About
 import zipfile
+
+from invoice import Invoice
 from window import *
 
 
@@ -206,3 +208,18 @@ class Events:
             globals.ui.statusbar.addPermanentWidget(self.labelstatus, 1)
         except Exception as e:
             print("error loadStatusBar: ", e)
+
+    @staticmethod
+    def resizeTableSales():
+        try:
+            header = globals.ui.tblSales.horizontalHeader()
+            for i in range(header.count()):
+                header.setSectionResizeMode(i, QtWidgets.QHeaderView.ResizeMode.Stretch)
+                header_items = globals.ui.tblSales.horizontalHeaderItem(i)
+                # negrita cabecera
+                font = header_items.font()
+                font.setBold(True)
+                header_items.setFont(font)
+
+        except Exception as e:
+            print("error en resizeTableSales: ", e)

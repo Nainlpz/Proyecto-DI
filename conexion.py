@@ -1,11 +1,23 @@
 import os
 import sqlite3
+
 import globals
 
 from PyQt6 import QtSql, QtWidgets
 
 class Conexion:
     def db_conexion(self = None):
+        """
+
+        Establece conexión con la base de datos local ``bbdd.sqlite``.
+
+        Comprueba que el archivo existe, valida que tenga tablas y finalmente abre la conexión.
+
+        :return: ``True`` si la conexión fue exitosa, ``False`` en caso contrario.
+        :rtype: bool
+
+        """
+
         ruta_db = './data/bbdd.sqlite'
 
         if not os.path.isfile(ruta_db):
@@ -33,6 +45,14 @@ class Conexion:
             return False
 
     def listProv(self=None):
+        """
+
+        Obtiene la lista de provincias registradas en la tabla ``provincias``.
+
+        :return: Lista con nombres de provincias.
+        :rtype: list[str]
+
+        """
 
         listprov = []
         query = QtSql.QSqlQuery()
@@ -44,6 +64,16 @@ class Conexion:
 
     @staticmethod
     def listMuniProv(province):
+        """
+
+        Obtiene todos los municipios pertenecientes a una provincia.
+
+        :param str province: Nombre de la provincia.
+        :return: Lista de municipios.
+        :rtype: list[str]
+
+        """
+
         try:
             listmunicipios = []
             query = QtSql.QSqlQuery()
@@ -58,6 +88,16 @@ class Conexion:
 
     @staticmethod
     def listCustomers(varCli):
+        """
+
+        Obtiene una lista de clientes.
+
+        :param bool varCli: Si es ``True`` devuelve solo clientes en histórico.
+        :return: Lista de filas completas de la tabla customers.
+        :rtype: list[list]
+
+        """
+
         list = []
         if varCli:
             query = QtSql.QSqlQuery()
@@ -78,6 +118,16 @@ class Conexion:
 
     @staticmethod
     def dataOneCustomer(dato):
+        """
+
+        Obtiene los datos de un cliente buscándolo por móvil o DNI/NIE.
+
+        :param str dato: Móvil o DNI/NIE.
+        :return: Lista con los datos del cliente.
+        :rtype: list
+
+        """
+
         try:
             list = []
             dato = str(dato).strip()
@@ -102,6 +152,16 @@ class Conexion:
 
     @staticmethod
     def deleteCli(dni):
+        """
+
+        Marca un cliente como no histórico (reactivado).
+
+        :param str dni: DNI/NIE del cliente.
+        :return: ``True`` si la operación fue exitosa.
+        :rtype: bool
+
+        """
+
         try:
             query = QtSql.QSqlQuery()
             query.prepare("UPDATE customers set historical = :value WHERE dni_nie = :dni")
@@ -116,6 +176,16 @@ class Conexion:
 
     @staticmethod
     def addClient(newCli):
+        """
+
+        Inserta un nuevo cliente.
+
+        :param list newCli: Datos del cliente.
+        :return: ``True`` si se insertó correctamente.
+        :rtype: bool
+
+        """
+
         try:
             query = QtSql.QSqlQuery()
             query.prepare("INSERT INTO customers"
@@ -142,6 +212,17 @@ class Conexion:
 
     @staticmethod
     def modifyClient(dni, modifyCli):
+        """
+
+        Modifica los datos de un cliente existente.
+
+        :param str dni: DNI/NIE del cliente.
+        :param list modifyCli: Nuevos valores de los campos.
+        :return: ``True`` si la actualización fue exitosa.
+        :rtype: bool
+
+        """
+
         try:
             query = QtSql.QSqlQuery()
             query.prepare("UPDATE customers SET adddata = :adddata, surname = :surname, name = :name, mail = :mail,"
@@ -167,10 +248,19 @@ class Conexion:
             print("error modifyClient", error)
 
 
-    ### PRODUCTS ###
+
 
     @staticmethod
     def listProducts():
+        """
+
+        Obtiene la lista completa de productos.
+
+        :return: Lista de filas de productos.
+        :rtype: list[list]
+
+        """
+
         list = []
         query = QtSql.QSqlQuery()
         query.prepare("SELECT * FROM products")
@@ -182,6 +272,16 @@ class Conexion:
 
     @staticmethod
     def dataOneProduct(dato):
+        """
+
+        Obtiene los datos de un producto por su código.
+
+        :param str dato: Código del producto.
+        :return: Lista con datos del producto.
+        :rtype: list
+
+        """
+
         try:
             list = []
             dato = str(dato).strip()
@@ -199,6 +299,16 @@ class Conexion:
 
     @staticmethod
     def addProduct(newProduct):
+        """
+
+        Inserta un nuevo producto.
+
+        :param list newProduct: Datos del producto.
+        :return: ``True`` si se insertó correctamente.
+        :rtype: bool
+
+        """
+
         try:
             query = QtSql.QSqlQuery()
             query.prepare("INSERT INTO products"
@@ -221,6 +331,16 @@ class Conexion:
 
     @staticmethod
     def deleteProduct(code):
+        """
+
+        Elimina un producto por su código.
+
+        :param int code: Código del producto.
+        :return: ``True`` si se eliminó correctamente.
+        :rtype: bool
+
+        """
+
         try:
             query = QtSql.QSqlQuery()
             query.prepare("DELETE FROM products WHERE Code = :code")
@@ -233,6 +353,17 @@ class Conexion:
             print("error deleteProduct", error)
 
     def modifyProduct(id, modpro):
+        """
+
+        Modifica los datos de un producto existente.
+
+        :param int id: Código del producto.
+        :param list modpro: Nuevos valores.
+        :return: ``True`` si se actualizó correctamente.
+        :rtype: bool
+
+        """
+
         try:
             query = QtSql.QSqlQuery()
             query.prepare("UPDATE products SET Name= :name, Family =:family, Stock = :stock, "
@@ -251,10 +382,20 @@ class Conexion:
         except Exception as error:
             print("error modifyPro", error)
 
-    ### INVOICE ###
+
 
     @staticmethod
     def searchClient(dni):
+        """
+
+        Verifica si existe un cliente por DNI.
+
+        :param str dni: DNI/NIE.
+        :return: ``True`` si existe.
+        :rtype: bool
+
+        """
+
         try:
             dni = str(dni).upper()
             query = QtSql.QSqlQuery()
@@ -271,6 +412,17 @@ class Conexion:
 
     @staticmethod
     def insertInvoice(dni, data):
+        """
+
+        Inserta una factura.
+
+        :param str dni: DNI del cliente.
+        :param str data: Fecha de la factura.
+        :return: ``True`` si se insertó correctamente.
+        :rtype: bool
+
+        """
+
         try:
             query = QtSql.QSqlQuery()
             query.prepare("INSERT INTO invoices (dninie, data) values (:dni, :data)")
@@ -283,3 +435,136 @@ class Conexion:
 
         except Exception as error:
             print("error insertInvoice", error)
+
+    @staticmethod
+    def allInvoices():
+        """
+
+        Obtiene todas las facturas ordenadas por ID descendente.
+
+        :return: Lista de facturas.
+        :rtype: list[list[str]]
+
+        """
+
+        try:
+            records = []
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM invoices ORDER BY idfact DESC")
+            if query.exec():
+                while query.next():
+                    row = [str(query.value(i)) for i in range(query.record().count())]
+                    records.append(row)
+            return records
+
+        except Exception as error:
+            print("error allInvoices", error)
+
+    @staticmethod
+    def dataOneInvoice(idfact):
+        """
+
+        Obtiene los datos de una factura por ID.
+
+        :param int idfact: ID de la factura.
+        :return: Lista con datos de la factura.
+        :rtype: list
+
+        """
+
+        try:
+            list = []
+            idfact = str(idfact).strip()
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM invoices WHERE idfact = :idfact")
+            query.bindValue(":idfact", idfact)
+            if query.exec():
+                while query.next():
+                    for i in range(query.record().count()):
+                        list.append(query.value(i))
+            return list
+
+        except Exception as error:
+            print("error dataOneInvoice", error)
+
+    @staticmethod
+    def dataOneSale(idfac):
+        """
+
+        Obtiene las líneas de venta de una factura.
+
+        :param int idfac: ID de la factura.
+        :return: Lista con líneas de venta.
+        :rtype: list[list]
+
+        """
+
+        try:
+            rows = []
+            idfac = str(idfac).strip()
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM sales WHERE idfac = :idfac")
+            query.bindValue(":idfac", idfac)
+
+            if query.exec():
+                while query.next():
+                    row = [query.value(2), query.value(4), query.value(5), query.value(3), query.value(6)]
+                    rows.append(row)
+            return rows
+
+        except Exception as error:
+            print("error dataOneInvoice", error)
+
+    @staticmethod
+    def selectProduct(item):
+        """
+
+        Obtiene el nombre y precio de un producto.
+
+        :param int item: Código del producto.
+        :return: Lista con nombre y precio.
+        :rtype: list[str]
+
+        """
+
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT Name, UnitPrice FROM products WHERE Code = :code")
+            query.bindValue(":code", int(item))
+            if query.exec():
+                while query.next():
+                    row = [str(query.value(i)) for i in range(query.record().count())]
+            return row
+
+        except Exception as error:
+            print("error selectProduct", error)
+
+    @staticmethod
+    def saveSales(data):
+        """
+
+        Inserta una línea de venta asociada a una factura.
+
+        :param list data: Datos de la venta (idfac, idpro, product, unitprice, amount, total)
+        :return: ``True`` si se insertó correctamente.
+        :rtype: bool
+
+        """
+
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("INSERT INTO sales (idfac, idpro, product, unitprice, amount, total) "
+                          " VALUES (:idfac, :idpro, :product, :unitprice, :amount, :total)")
+            query.bindValue(":idfac", data[0])
+            query.bindValue(":idpro", data[1])
+            query.bindValue(":product", data[2])
+            query.bindValue(":unitprice", data[3])
+            query.bindValue(":amount", data[4])
+            query.bindValue(":total", data[5])
+            if query.exec():
+                return True
+            else:
+                return False
+
+        except Exception as error:
+            print("error saveSales conexion", error)

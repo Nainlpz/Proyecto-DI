@@ -1,6 +1,8 @@
 from PyQt6 import QtWidgets
 import sys
 
+from PyQt6.QtGui import QShortcut, QKeySequence, QKeyEvent
+
 from conexion import Conexion
 from customers import *
 from products import Products
@@ -24,6 +26,7 @@ class Main(QtWidgets.QMainWindow):
         globals.about = About()
         globals.dlgOpen = FileDialogOpen()
         self.reports = Reports()
+        self.invoice = Invoice()
 
         # Styles
         app.setStyleSheet(styles.load_stylesheet())
@@ -35,8 +38,11 @@ class Main(QtWidgets.QMainWindow):
         Products.loadTableProducts()
         Events.resizeTabCustomer(self)
         Events.resizeTabProducts()
+        Events.resizeTableSales()
         Products.cargaFamilypro()
         Products.loadTableProducts()
+        Invoice.loadTableInvoice()
+        Invoice.loadInvoiceirst()
 
         # Functions menu bar
         globals.ui.actionExit.triggered.connect(Events.messageExit)
@@ -69,6 +75,9 @@ class Main(QtWidgets.QMainWindow):
         Events.loadProv(self)
         globals.ui.cmbProvinceCli.currentIndexChanged.connect(Events.loadMuni)
 
+        # Eventos teclado
+        self.scCleanFac = QtGui.QShortcut(QKeySequence("Ctrl+S"), self)
+        self.scCleanFac.activated.connect(Invoice.saveSales)
 
         # Functions buttons
         globals.ui.btnDateCli.clicked.connect(Events.openCalendar)
@@ -85,10 +94,14 @@ class Main(QtWidgets.QMainWindow):
 
         globals.ui.btnReloadFactura.clicked.connect(Invoice.reloadInvoice)
         globals.ui.btnSaveFactura.clicked.connect(Invoice.saveInvoice)
+        globals.ui.btnSaveSale.clicked.connect(Invoice.saveSales)
+
 
         # Functions tables
         globals.ui.tblCustomerList.clicked.connect(Customers.selectCustomer)
         globals.ui.tblProductList.clicked.connect(Products.selectProduct)
+        globals.ui.tblFactura.clicked.connect(Invoice.selectInvoice)
+        globals.ui.tblSales.itemChanged.connect(Invoice.cellChangedSales)
         
         # Functions
         Events.loadStatusBar(self)
