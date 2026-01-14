@@ -18,7 +18,15 @@ class Conexion:
 
         """
 
-        ruta_db = './data/bbdd.sqlite'
+        # ruta_db = './data/bbdd.sqlite'
+
+        APP_NAME = "SuperTeis"
+        ruta_db = os.path.join(
+            os.getenv('LOCALAPPDATA'),
+            APP_NAME,
+            "data",
+            "bbdd.sqlite"
+        )
 
         if not os.path.isfile(ruta_db):
             QtWidgets.QMessageBox.critical(None, 'Error', 'El archivo de la base de datos no existe.',
@@ -568,3 +576,40 @@ class Conexion:
 
         except Exception as error:
             print("error saveSales conexion", error)
+
+    def existeFacturaSales(fact):
+        """
+
+        Devuelve True si en la tabla ventas existe el idfac, si no devuelve False
+        :return: bool
+        :rtype: bool
+
+        """
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM sales WHERE idfac = :fact")
+            query.bindValue(":fact", int(fact))
+            if query.exec():
+                if query.next():
+                    return True
+                else:
+                    return False
+
+        except Exception as error:
+            print("error en existeFacturaSales", error)
+
+    @staticmethod
+    def datosFactura(numfact):
+        try:
+            data = []
+            query = QtSql.QSqlQuery()
+            query.prepare("SELECT * FROM sales WHERE idfac = :numfact")
+            query.bindValue(":numfact", int(numfact))
+            if query.exec():
+                while query.next():
+                    row = [str(query.value(i)) for i in range(query.record().count())]
+                    data.append(row)
+            return data
+
+        except Exception as error:
+            print("error datosFactura", error)

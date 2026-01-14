@@ -7,3 +7,4 @@ status = None
 dlgOpen = None
 subtotal = 0.00
 linesales = []
+report = None

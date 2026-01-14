@@ -1,6 +1,6 @@
 import events
 import globals
-from calendar import *
+from calendario import *
 from about import *
 from datetime import datetime
 

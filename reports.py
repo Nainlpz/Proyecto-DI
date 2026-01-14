@@ -1,110 +1,267 @@
-from tkinter import Image
-
+import os
+from datetime import datetime
+import globals
 from reportlab.pdfgen import canvas
-import os, datetime
 from conexion import *
 from PIL import Image
 
-class Reports():
+class Reports:
 
-    def __init__(self):
-        rootPath = ".\\reports"
-        data = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
-        self.namereportcli = data + "_reportcustomers.pdf"
-        self.pdf_path = os.path.join(rootPath, self.namereportcli)
-        self.c = canvas.Canvas(self.pdf_path)
-        self.rootPath = rootPath
-
-    def footer(self, title):
+    @staticmethod
+    def footer(titulo):
         try:
-            self.c.line(35, 65, 525, 65)
-            day = datetime.datetime.today()
-            day = day.strftime("%d/%m/%Y %H:%M:%S")
-            self.c.setFont('Helvetica', 7)
-            self.c.drawString(40, 50, day)
-            self.c.drawString(260, 50, title)
-            self.c.drawString(500, 50, 'Page ' + str(self.c.getPageNumber()))
-        except Exception as e:
-            print("error en footer", e)
+            globals.report.line(35, 60,525, 60)
+            globals.report.line(35, 60, 525, 60)
+            day = datetime.today().strftime("%d/%m/%Y %H:%M:%S")
+            globals.report.setFont('Helvetica', size = 7)
+            globals.report.drawString(70, 50, day)
+            globals.report.drawString(250, 50, titulo)
+            globals.report.drawString(480, 50, str('Página: ' + str(globals.report.getPageNumber())))
+            globals.report.setFont('Helvetica', size=7)
+            globals.report.drawString(70, 50, day)
+            globals.report.drawString(250, 50, titulo)
+            globals.report.drawString(480, 50, str('Página: ' + str(globals.report.getPageNumber())))
+        except Exception as error:
+           print(error)
 
-    def top(self, title):
+    @staticmethod
+    def topReport(titulo):
         try:
-            path_logo = r".\img\logo.ico"
+            path_logo = ".\\img\\logo.ico"
             logo = Image.open(path_logo)
             if isinstance(logo, Image.Image):
-                self.c.line(45, 770, 175, 770)
-                self.c.line(45, 705, 175, 705)
-                self.c.line(45, 770, 45, 705)
-                self.c.line(175, 770, 175, 705)
-                self.c.setFont('Helvetica-Bold', 10)
-                self.c.drawString(55, 785, "EMPRESA TEIS")
-                self.c.drawCentredString(300, 675, title)
-                self.c.line(35, 665, 525, 665)
-                self.c.drawImage(path_logo, 490, 765, width=40, height=40)
-                self.c.setFont("Helvetica", 9)
-                self.c.drawString(55, 755, 'CIF: A12345678')
-                self.c.drawString(55, 745, 'Avenida de Galicia, 101')
-                self.c.drawString(55, 735, 'Vigo - 36215 - España')
-                self.c.drawString(55, 725, 'Tlfo: 986 123 456')
-                self.c.drawString(55, 715, 'teis@mail.com')
+                globals.report.line(35, 60,525, 60)
+                globals.report.setFont('Helvetica-Bold', size = 10)
+                globals.report.drawString(55, 785, "EMPRESA TEIS" )
+                globals.report.drawCentredString(290, 675, titulo)
+                globals.report.line(35, 665,525, 665)
+                globals.report.line(35, 60, 525, 60)
+                globals.report.setFont('Helvetica-Bold', size=10)
+                globals.report.drawString(55, 785, "EMPRESA TEIS")
+                globals.report.drawCentredString(290, 675, titulo)
+                globals.report.line(35, 665, 525, 665)
+                #dibuja la imagen
+                globals.report.drawImage(path_logo,490, 765, width=40, height=40)
+                globals.report.drawImage(path_logo, 490, 765, width=40, height=40)
+                # datos de la empresa
+                globals.report.setFont('Helvetica', size = 8)
+                globals.report.drawString(55, 760, "CIF: A12345678" )
+                globals.report.drawString(55, 745, 'Avda. de Galicia, 101')
+                globals.report.drawString(55, 730, "Vigo - 36215 - España")
+                globals.report.drawString(55, 715, "Tlfo: 986 123 456")
+                globals.report.drawString(55, 700, "email: teis@mail.com")
+                globals.report.line(50, 800, 160, 800 )
+                globals.report.line(50, 695, 160, 695 )
+                globals.report.line(50, 800, 50, 695 )
+                globals.report.line(160, 800, 160, 695 )
             else:
-                print("error cargar imagen")
-        except Exception as e:
-            print("error top", e)
+                print("no puedo cargar el imagen")
+
+        except Exception as error:
+            print(error)
 
     def reportCustomers(self):
         try:
-            title = "Customers List"
-            self.footer(title)
-            self.top(title)
+            rootPath = ".\\reports"
+            if not os.path.exists(rootPath):
+                os.makedirs(rootPath)
+            data = datetime.today().strftime("%Y_%m_%d_%H_%M_%S")
+            namereportcli = data + "_reportcustomers.pdf"
+            pdf_path = os.path.join(rootPath , namereportcli)
+            globals.report = canvas.Canvas(pdf_path)
+            titulo = "Listado Clientes"
+            Reports.footer(titulo)
+            Reports.topReport(titulo)
             var = False
             records = Conexion.listCustomers(var)
-            items = ["DNI_NIE", "SURNAME", "NAME", "MOBILE", "CITY", "INVOICE TYPE", "STATE"]
-            self.c.setFont("Helvetica-Bold", 10)
-            self.c.drawString(40, 650, str(items[0]))
-            self.c.drawString(100, 650, str(items[1]))
-            self.c.drawString(180, 650, str(items[2]))
-            self.c.drawString(260, 650, str(items[3]))
-            self.c.drawString(330, 650, str(items[4]))
-            self.c.drawString(390, 650, str(items[5]))
-            self.c.drawString(480, 650, str(items[6]))
-            self.c.line(35, 645, 525, 645)
+
+            if not records:
+                print("No Customers")
+                return
+
+            items =  ["DNI_NIE", "SURNAME", "NAME", "MOBILE", "CITY", "INVOICE TYPE", "STATE"]
+            globals.report.setFont("Helvetica-Bold", 10)
+            globals.report.drawString(45, 650, str(items[0]))
+            globals.report.drawString(105, 650, str(items[1]))
+            globals.report.drawString(185, 650, str(items[2]))
+            globals.report.drawString(245, 650, str(items[3]))
+            globals.report.drawString(330, 650, str(items[4]))
+            globals.report.drawString(390, 650, str(items[5]))
+            globals.report.drawString(480, 650, str(items[6]))
+            globals.report.line(35, 645, 525, 645)
+            x = 55
+            y = 630
+
+            for record in records:
+                if y <= 90:  # crea una nueva página
+                    globals.report.setFont("Helvetica-Oblique", 8)
+                    globals.report.drawString(450, 75, "Página siguiente...")
+                    globals.report.showPage()  #crea una nueva página
+                    self.footer(titulo)
+                    self.topReport(titulo)
+                    items = ["DNI_NIE", "SURNAME", "NAME", "MOBILE", "CITY", "INVOICE TYPE", "STATE"]
+                    globals.report.setFont("Helvetica-Bold", 10)
+                    globals.report.drawString(45, 650, str(items[0]))
+                    globals.report.drawString(105, 650, str(items[1]))
+                    globals.report.drawString(185, 650, str(items[2]))
+                    globals.report.drawString(245, 650, str(items[3]))
+                    globals.report.drawString(330, 650, str(items[4]))
+                    globals.report.drawString(390, 650, str(items[5]))
+                    globals.report.drawString(480, 650, str(items[6]))
+                    globals.report.line(35, 645, 525, 645)
+                    x = 55
+                    y = 630
+
+                globals.report.setFont("Helvetica", 8)
+                dni = '***' + str(record[0][4:7] + '***')
+                globals.report.drawCentredString(x +10, y, dni)
+                globals.report.drawString(x + 50, y, str(record[2]))
+                globals.report.drawString(x + 130, y, str(record[3]))
+                globals.report.drawCentredString(x + 210, y, str(record[5]))
+                globals.report.drawString(x + 270, y, str(record[8]))
+                globals.report.drawString(x + 350, y, str(record[9]))
+                if str(record[10]) == 'True':
+                    globals.report.drawString(x + 430, y, "Activo")
+                else:
+                    globals.report.drawString(x + 430, y, "Baja")
+                y = y - 25
+
+            globals.report.save()
+            # otra forma de abrir sin necesidade comprobar el nombre porque ya existe
+            try:
+                os.startfile(pdf_path)
+            except Exception as e:
+                print("No se pudo abrir el PDF:", e)
+
+        except Exception as error:
+            print("error en reportCustomers", error)
+
+    def reportProducts(self):
+        try:
+            rootPath = ".\\reports"
+            if not os.path.exists(rootPath):
+                os.makedirs(rootPath)
+            data = datetime.today().strftime("%Y_%m_%d_%H_%M_%S")
+            namereportpro = data + "_reportproducts.pdf"
+            pdf_path = os.path.join(rootPath, namereportpro)
+            globals.report = canvas.Canvas(pdf_path)
+            titulo = "Product List"
+            Reports.footer(titulo)
+            Reports.topReport(titulo)
+            records = Conexion.listProducts()
+            if not records:
+                print("No Productos")
+                return
+            items = ["ID", "NAME", "FAMILY", "STOCK", "PRICE"]
+            globals.report.setFont("Helvetica-Bold", 10)
+            globals.report.drawString(60, 650, str(items[0]))
+            globals.report.drawString(165, 650, str(items[1]))
+            globals.report.drawString(310, 650, str(items[2]))
+            globals.report.drawString(390, 650, str(items[3]))
+            globals.report.drawString(480, 650, str(items[4]))
+            globals.report.line(35, 645, 525, 645)
+            x = 55
             y = 630
             for record in records:
-                if y <= 90:
-                    self.c.setFont("Helvetica-Oblique", 8)
-                    self.c.drawString(480, 75, "Next Page")
-                    self.c.showPage() # Crea nueva página
-                    self.footer(title)
-                    self.top(title)
+                if y <= 90:  # crea una nueva página
+                    globals.report.setFont("Helvetica-Oblique", 8)
+                    globals.report.drawString(450, 75, "Página siguiente...")
+                    globals.report.showPage()  # crea una nueva página
+                    Reports.footer(titulo)
+                    Reports.topReport(titulo)
                     items = ["DNI_NIE", "SURNAME", "NAME", "MOBILE", "CITY", "INVOICE TYPE", "STATE"]
-                    self.c.setFont("Helvetica-Bold", 10)
-                    self.c.drawString(40, 650, str(items[0]))
-                    self.c.drawString(100, 650, str(items[1]))
-                    self.c.drawString(180, 650, str(items[2]))
-                    self.c.drawString(260, 650, str(items[3]))
-                    self.c.drawString(330, 650, str(items[4]))
-                    self.c.drawString(390, 650, str(items[5]))
-                    self.c.drawString(480, 650, str(items[6]))
-                    self.c.line(35, 645, 525, 645)
+                    globals.report.setFont("Helvetica-Bold", 10)
+                    globals.report.drawString(60, 650, str(items[0]))
+                    globals.report.drawString(165, 650, str(items[1]))
+                    globals.report.drawString(310, 650, str(items[2]))
+                    globals.report.drawString(390, 650, str(items[3]))
+                    globals.report.drawString(480, 650, str(items[4]))
+                    globals.report.line(35, 645, 525, 645)
+                    x = 55
                     y = 630
-                self.c.setFont("Helvetica", 8)
-                dni = '*****' + str(record[0][5:9])
-                self.c.drawString(40, y, dni)
-                self.c.drawString(100, y, str(record[2]))
-                self.c.drawString(180, y, str(record[3]))
-                self.c.drawString(260, y, str(record[5]))
-                self.c.drawString(330, y, str(record[8]))
-                self.c.drawString(410, y, str(record[9]))
-                if str(record[10]) == 'True':
-                    self.c.drawString(490, y, "Alta")
-                else:
-                    self.c.drawString(490, y, "Baja")
+                globals.report.setFont("Helvetica-Bold", 8)
+                globals.report.drawCentredString(x+10, y, str(record[0]))
+                globals.report.drawString(x + 110, y, str(record[1]))
+                globals.report.drawString(x + 255, y, str(record[2]))
+                globals.report.drawString(x + 350, y, str(record[3]))
+                globals.report.drawRightString(x + 450, y, str(record[4]))
                 y = y - 25
-            self.c.save()
-            for file in os.listdir(self.rootPath):
-                if file.endswith(self.namereportcli):
-                    os.startfile(self.pdf_path)
+            globals.report.save()
+            # otra forma de abrir sin necesidade comprobar el nombre porque ya existe
+            try:
+                os.startfile(pdf_path)
+            except Exception as e:
+                print("No se pudo abrir el PDF:", e)
 
-        except Exception as e:
-            print("error en reportCustomers", e)
+        except Exception as error:
+                print("error en report productos", error)
+
+    @staticmethod
+    def ticket(self = None):
+        try:
+            rootPath = ".\\reports"
+            if not os.path.exists(rootPath):
+                os.makedirs(rootPath)
+            data = datetime.today().strftime("%Y_%m_%d_%H_%M_%S")
+            ticket_name = data + "_ticket.pdf"
+            pdf_path = os.path.abspath(os.path.join(rootPath, ticket_name))
+
+            globals.report = canvas.Canvas(pdf_path)
+            dni = globals.ui.txtDniFactura.text()
+            titulo = "FACTURA SIMPLIFICADA" if dni == "00000000T" else "FACTURA"
+
+            records = Conexion.dataOneCustomer(dni)
+
+            y = 785
+            globals.report.setFont("Helvetica-Bold", 10)
+            globals.report.drawString(220, y, "DNI: " + str(records[0]))
+            globals.report.drawString(220, y - 15, "APELLIDOS: " + str(records[2]))
+            globals.report.drawString(220, y - 30, "NOMBRE: " + str(records[3]))
+            globals.report.drawString(220, y - 45, "DIRECCIÓN:  " + str(records[6]))
+            globals.report.drawString(220, y - 60, "LOCALIDAD: " + str(records[8]) + "  PROVINCIA: " + str(records[7]))
+
+            numfact = globals.ui.lblNumFactura.text()
+            globals.report.setFont("Helvetica-Bold", 10)
+            if titulo == "FACTURA":
+                globals.report.drawString(320, 675, "Nº " + str(numfact))
+            else:
+                globals.report.drawString(360, 675, "Nº " + str(numfact))
+
+            dataFact = Conexion.datosFactura(numfact)
+            print(dataFact)
+            items = ["Code", "Product", "Unit Price", "Amount", "Total"]
+            globals.report.drawString(60, 650, str(items[0]))
+            globals.report.drawString(150, 650, str(items[1]))
+            globals.report.drawString(310, 650, str(items[2]))
+            globals.report.drawString(400, 650, str(items[3]))
+            globals.report.drawString(480, 650, str(items[4]))
+            globals.report.line(35, 640, 525, 640)
+
+            x = 60
+            y = 625
+            for data in dataFact:
+                globals.report.setFont("Helvetica", 8)
+                globals.report.drawString(x, y, str(data[2]))
+                globals.report.drawString(x + 90, y, str(data[4]))
+                globals.report.drawString(x + 250, y, str(data[5]))
+                globals.report.drawString(x + 360, y, str(data[3]))
+                globals.report.drawString(x + 420, y, str(data[6]))
+                y = y - 25
+
+            Reports.topReport(titulo)
+            Reports.footer(titulo)
+            globals.report.save()
+
+            # otra forma de abrir sin necesidade comprobar
+            try:
+                os.startfile(pdf_path)
+            except Exception as e:
+                print("No se pudo abrir el PDF:", e)
+
+        except Exception as error:
+            print("error ticket", error)
+
+
+
+
+

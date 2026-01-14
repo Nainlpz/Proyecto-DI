@@ -228,7 +228,7 @@ class Customers:
                     mbox.setText("Delete Client")
                 else:
                     print("Algo ha ido mal")
-                Customers.loadTableCli(self)
+                Customers.loadTableCli(True)
             else:
                 mbox = QtWidgets.QMessageBox()
                 mbox.setWindowTitle("Warning")
@@ -365,7 +365,7 @@ class Customers:
                     mbox.setText("Client not exists")
                     if mbox.exec():
                         mbox.hide()
-                        Customers.reloadClient()
+
                 else:
                     box = [globals.ui.txtDniCif, globals.ui.txtDateCli, globals.ui.txtSurnameCli,
                            globals.ui.txtNameCli,globals.ui.txtEmailCli, globals.ui.txtMobileCli,

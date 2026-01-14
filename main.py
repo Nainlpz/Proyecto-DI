@@ -51,6 +51,7 @@ class Main(QtWidgets.QMainWindow):
         globals.ui.actionRestoreBackup.triggered.connect(Events.restoreBackup)
         globals.ui.actionCustomers.triggered.connect(Events.exportXlsCustomers)
         globals.ui.actionCustomer_Report.triggered.connect(self.reports.reportCustomers)
+        globals.ui.actionProducts_Report.triggered.connect(self.reports.reportProducts)
 
         # Functions line edit
         globals.ui.txtDniCif.editingFinished.connect(Customers.checkDni)

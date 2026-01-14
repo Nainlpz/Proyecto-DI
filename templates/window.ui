@@ -341,7 +341,7 @@
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>../../../../../.designer/img/calendarioIcono.jpg</normaloff>../../../../../.designer/img/calendarioIcono.jpg</iconset>
+                  <normaloff>../img/calendarioIcono.jpg</normaloff>../img/calendarioIcono.jpg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -416,7 +416,7 @@
                   </property>
                   <property name="icon">
                    <iconset>
-                    <normaloff>../../../../../.designer/img/reload.png</normaloff>../../../../../.designer/img/reload.png</iconset>
+                    <normaloff>../img/reload.png</normaloff>../img/reload.png</iconset>
                   </property>
                   <property name="flat">
                    <bool>true</bool>
@@ -717,7 +717,7 @@
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>../../../../../.designer/img/lupa.png</normaloff>../../../../../.designer/img/lupa.png</iconset>
+                  <normaloff>../img/lupa.png</normaloff>../img/lupa.png</iconset>
                 </property>
                 <property name="flat">
                  <bool>true</bool>
@@ -938,7 +938,7 @@
                 </property>
                 <property name="icon">
                  <iconset>
-                  <normaloff>../../../../../.designer/img/reload.png</normaloff>../../../../../.designer/img/reload.png</iconset>
+                  <normaloff>../img/reload.png</normaloff>../img/reload.png</iconset>
                 </property>
                 <property name="flat">
                  <bool>true</bool>
@@ -1826,6 +1826,12 @@
               <height>581</height>
              </rect>
             </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
             </property>
@@ -1843,7 +1849,7 @@
             </attribute>
             <column>
              <property name="text">
-              <string>Nº Factura</string>
+              <string>Nº Fact</string>
              </property>
             </column>
             <column>
@@ -1854,6 +1860,11 @@
             <column>
              <property name="text">
               <string>Fecha</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string/>
              </property>
             </column>
            </widget>
@@ -1978,7 +1989,7 @@
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../../../.designer/img/reload.png</normaloff>../../../../../.designer/img/reload.png</iconset>
+                 <normaloff>../img/reload.png</normaloff>../img/reload.png</iconset>
                </property>
                <property name="flat">
                 <bool>true</bool>
@@ -2097,6 +2108,7 @@
      <string>Reports</string>
     </property>
     <addaction name="actionCustomer_Report"/>
+    <addaction name="actionProducts_Report"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -2133,7 +2145,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset>
-     <normalon>../../../../../.designer/img/exit.png</normalon>
+     <normalon>../img/exit.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -2156,7 +2168,7 @@
   <action name="actionBackup">
    <property name="icon">
     <iconset>
-     <normalon>../../../../../.designer/img/backup.png</normalon>
+     <normalon>../img/backup.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -2169,7 +2181,7 @@
   <action name="actionRestoreBackup">
    <property name="icon">
     <iconset>
-     <normalon>../../../../../.designer/img/restore.png</normalon>
+     <normalon>../img/restore.png</normalon>
     </iconset>
    </property>
    <property name="text">
@@ -2182,6 +2194,11 @@
   <action name="actionCustomers">
    <property name="text">
     <string>Customers</string>
+   </property>
+  </action>
+  <action name="actionProducts_Report">
+   <property name="text">
+    <string>Products Report</string>
    </property>
   </action>
  </widget>
