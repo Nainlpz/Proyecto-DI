@@ -11,7 +11,6 @@ import globals
 from globals import linesales
 from reports import Reports
 
-
 class Invoice:
 
     @staticmethod
@@ -424,6 +423,7 @@ class Invoice:
 
         :param self: Parámetro opcional para compatibilidad con señales
         """
+        from products import Products
         try:
             fact = globals.ui.lblNumFactura.text()
 
@@ -433,6 +433,8 @@ class Invoice:
                 correct = False
                 for data in globals.linesales:
                     correct = Conexion.saveSales(data)
+                    if correct:
+                        Conexion.descontarStock(data[1], data[4]) # Code , Sales
 
                 if globals.linesales[-1] and correct:
                     mbox = QtWidgets.QMessageBox()
@@ -450,6 +452,8 @@ class Invoice:
                         globals.linesales.clear()
                         globals.ui.tblSales.setRowCount(0)
                         mbox.hide()
+
+                        Products.loadTableProducts()
 
         except Exception as error:
             print("Error in saveSales:", error)

@@ -1,4 +1,4 @@
-from PyQt6 import QtCore
+from PyQt6 import QtCore, QtGui
 
 from conexion import *
 from events import Events
@@ -23,6 +23,15 @@ class Products:
                 globals.ui.tblProductList.setItem(index, 2, QtWidgets.QTableWidgetItem(str("  " + str(record[2]) + "  ")))
                 globals.ui.tblProductList.setItem(index, 3, QtWidgets.QTableWidgetItem(str(record[3])))
                 globals.ui.tblProductList.setItem(index, 4, QtWidgets.QTableWidgetItem(str(record[4]) + " €"))
+
+                stock = float(record[2])
+                if stock < 5:
+                    pale_red = QtGui.QColor(255, 200, 200)
+
+                    for i in range(5):
+                        item = globals.ui.tblProductList.item(index, i)
+                        if item:
+                            item.setBackground(pale_red)
 
                 globals.ui.tblProductList.item(index, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
                 globals.ui.tblProductList.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)

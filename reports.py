@@ -252,7 +252,6 @@ class Reports:
             Reports.footer(titulo)
             globals.report.save()
 
-            # otra forma de abrir sin necesidade comprobar
             try:
                 os.startfile(pdf_path)
             except Exception as e:

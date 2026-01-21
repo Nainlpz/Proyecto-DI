@@ -632,3 +632,22 @@ class Conexion:
 
         except Exception as error:
             print("error deleteInvoice Conexion", error)
+
+    @staticmethod
+    def descontarStock(code, cantidad):
+        """
+        Descuenta la cantidad vendida del stock de un producto dado su código.
+        """
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("UPDATE products SET Stock = Stock - :cantidad WHERE Code = :code")
+            query.bindValue(":cantidad", int(cantidad))
+            query.bindValue(":code", int(code))
+
+            if query.exec():
+                return True
+            else:
+                return False
+        except Exception as error:
+            print("Error en descontarStock:", error)
+            return False
