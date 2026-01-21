@@ -150,9 +150,10 @@ class Invoice:
                 # aquí se crea un botón en cada fila
                 btn_del = QtWidgets.QPushButton()
                 btn_del.setIcon(QIcon("./img/basura.png"))
-                btn_del.setIconSize(QtCore.QSize(30, 30))
+                btn_del.setIconSize(QtCore.QSize(26, 26))
                 btn_del.setFixedSize(32, 32)
                 btn_del.setStyleSheet("border: none; background-color: transparent")
+                btn_del.clicked.connect(Invoice.deleteInvoice)
                 globals.ui.tblFactura.setCellWidget(index, 3, btn_del)
                 globals.ui.tblFactura.item(index, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
                 globals.ui.tblFactura.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -177,6 +178,9 @@ class Invoice:
             globals.ui.lblNumFactura.setText("")
             globals.ui.lblFechaFactura.setText("")
             Invoice.searchInvoice()
+            header = globals.ui.tblSales.horizontalHeader()
+            header.setSectionResizeMode(5, QtWidgets.QHeaderView.ResizeMode.Fixed)
+            globals.ui.tblSales.setColumnWidth(5, 36)
 
         except Exception as error:
             print("error en loadInvoiceirst", error)
@@ -216,11 +220,17 @@ class Invoice:
         :param row: Índice de la fila a activar
         """
         try:
+            fact = globals.ui.lblNumFactura.text()
+
+            if Conexion.existeFacturaSales(fact):
+                return
+
+            table = globals.ui.tblSales
             if row is None:
-                row = 1
+                row = table.rowCount()
 
             if row >= globals.ui.tblSales.rowCount():
-                globals.ui.tblSales.setRowCount(row)
+                globals.ui.tblSales.setRowCount(row + 1)
 
             center_align = QtCore.Qt.AlignmentFlag.AlignCenter
 
@@ -249,6 +259,15 @@ class Invoice:
                 QtCore.Qt.AlignmentFlag.AlignVCenter
             )
             globals.ui.tblSales.setItem(row, 4, item_total)
+
+            # Eliminar
+            btn_del = QtWidgets.QPushButton()
+            btn_del.setIcon(QIcon("./img/basura.png"))
+            btn_del.setIconSize(QtCore.QSize(26, 26))
+            btn_del.setFixedSize(32, 32)
+            btn_del.setStyleSheet("border: none; background-color: transparent")
+            btn_del.clicked.connect(Invoice.deleteSales)
+            globals.ui.tblSales.setCellWidget(row, 5, btn_del)
 
         except Exception as error:
             print("error en activeSales", error)
@@ -364,13 +383,18 @@ class Invoice:
             row_items = [globals.ui.tblSales.item(row, i) for i in range(5)]
             is_row_complete = all(it and it.text().strip() for it in row_items)
 
+            fact = globals.ui.lblNumFactura.text().strip()
+
+            if not fact.isdigit():
+                return
+
             if is_row_complete:
-                # Crear nueva fila si es la última
-                if row == globals.ui.tblSales.rowCount() - 1:
-                    next_row = globals.ui.tblSales.rowCount()
-                    QtCore.QTimer.singleShot(
-                        0, lambda: Invoice.activeSales(next_row)
-                    )
+                if not Conexion.existeFacturaSales(fact):
+                    if row == globals.ui.tblSales.rowCount() - 1:
+                        next_row = globals.ui.tblSales.rowCount()
+                        QtCore.QTimer.singleShot(
+                            0, lambda: Invoice.activeSales(next_row)
+                        )
 
                     # Guardar línea de venta
                     sale = [
@@ -458,6 +482,15 @@ class Invoice:
                             row_index, col_index, table_item
                         )
 
+                        btn_del = QtWidgets.QPushButton()
+                        btn_del.setIcon(QIcon("./img/basura.png"))
+                        btn_del.setIconSize(QtCore.QSize(26, 26))
+                        btn_del.setFixedSize(32, 32)
+                        btn_del.setStyleSheet("border: none; background-color: transparent")
+                        btn_del.clicked.connect(Invoice.deleteSales)
+
+                        table.setCellWidget(row_index, 5, btn_del)
+
                 Invoice.bloquearTablaSales()
 
         except Exception as error:
@@ -482,3 +515,83 @@ class Invoice:
 
         except Exception as error:
             print("Error en bloquearTablaSales:", error)
+
+    @staticmethod
+    def deleteInvoice():
+        try:
+            fact = globals.ui.lblNumFactura.text()
+
+            if Conexion.existeFacturaSales(fact):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowTitle("Can't delete Invoice")
+                mbox.setText("This invoice have sales it can't be deleted.")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                if mbox.exec() == QtWidgets.QMessageBox.StandardButton.Ok:
+                    mbox.hide()
+            else:
+                Conexion.deleteInvoice(fact)
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setWindowTitle("Deleted invoice")
+                mbox.setText("Invoice Nº" + str(fact) + " has been successfully deleted.")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                if mbox.exec() == QtWidgets.QMessageBox.StandardButton.Ok:
+                    mbox.hide()
+                Invoice.loadTableInvoice()
+        except Exception as error:
+            print("Error en deleteInvoice:", error)
+
+    @staticmethod
+    def deleteSales():
+        try:
+            btn = globals.ui.tblSales.sender()
+
+            if not btn:
+                return
+
+            table = globals.ui.tblSales
+
+            # localizar la fila del botón pulsado
+            for row in range(table.rowCount()):
+                if table.cellWidget(row, 5) == btn:
+                    break
+            else:
+                return
+
+            # comprobar si la factura ya tiene ventas guardadas
+            fact = globals.ui.lblNumFactura.text()
+
+            if Conexion.existeFacturaSales(fact):
+                mbox = QtWidgets.QMessageBox()
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+                mbox.setWindowTitle("No permitido")
+                mbox.setText("Esta factura ya está guardada y no se pueden borrar líneas.")
+                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.exec()
+                return
+
+            # eliminar fila
+            table.removeRow(row)
+
+            # eliminar de linesales si existe
+            if row < len(globals.linesales):
+                globals.linesales.pop(row)
+
+            # recalcular totales
+            subtotal = 0.0
+            for r in range(table.rowCount()):
+                item_total = table.item(r, 4)
+                if item_total and item_total.text():
+                    subtotal += float(item_total.text())
+
+            globals.subtotal = subtotal
+            iva = round(subtotal * 0.21, 2)
+            total = round(subtotal + iva, 2)
+
+            globals.ui.lblSubtotal.setText(f"{subtotal:.2f} €")
+            globals.ui.lblIVA.setText(f"{iva:.2f} €")
+            globals.ui.lblTotal.setText(f"{total:.2f} €")
+
+        except Exception as error:
+            print("Error en deleteSales:", error)

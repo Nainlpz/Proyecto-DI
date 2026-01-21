@@ -1770,6 +1770,11 @@
              <string>Total</string>
             </property>
            </column>
+           <column>
+            <property name="text">
+             <string/>
+            </property>
+           </column>
           </widget>
          </item>
          <item row="1" column="0">

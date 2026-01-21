@@ -560,7 +560,7 @@ class Ui_MainWindow(object):
         self.tblSales.setAlternatingRowColors(True)
         self.tblSales.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectionBehavior.SelectRows)
         self.tblSales.setObjectName("tblSales")
-        self.tblSales.setColumnCount(5)
+        self.tblSales.setColumnCount(6)
         self.tblSales.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tblSales.setHorizontalHeaderItem(0, item)
@@ -572,6 +572,8 @@ class Ui_MainWindow(object):
         self.tblSales.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.tblSales.setHorizontalHeaderItem(4, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tblSales.setHorizontalHeaderItem(5, item)
         self.tblSales.verticalHeader().setVisible(False)
         self.tblSales.verticalHeader().setDefaultSectionSize(30)
         self.gridLayout_15.addWidget(self.tblSales, 3, 0, 1, 2)
@@ -744,7 +746,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionExit)
 
         self.retranslateUi(MainWindow)
-        self.panelMain.setCurrentIndex(0)
+        self.panelMain.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

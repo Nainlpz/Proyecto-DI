@@ -18,15 +18,17 @@ class Conexion:
 
         """
 
-        # ruta_db = './data/bbdd.sqlite'
 
-        APP_NAME = "SuperTeis"
-        ruta_db = os.path.join(
-            os.getenv('LOCALAPPDATA'),
-            APP_NAME,
-            "data",
-            "bbdd.sqlite"
-        )
+        """
+                APP_NAME = "SuperTeis"
+                ruta_db = os.path.join(
+                    os.getenv('LOCALAPPDATA'),
+                    APP_NAME,
+                    "data",
+                    "bbdd.sqlite"
+                )
+        """
+        ruta_db = './data/bbdd.sqlite'
 
         if not os.path.isfile(ruta_db):
             QtWidgets.QMessageBox.critical(None, 'Error', 'El archivo de la base de datos no existe.',
@@ -586,6 +588,9 @@ class Conexion:
 
         """
         try:
+            if not fact or not str(fact).isdigit():
+                return False
+
             query = QtSql.QSqlQuery()
             query.prepare("SELECT * FROM sales WHERE idfac = :fact")
             query.bindValue(":fact", int(fact))
@@ -613,3 +618,17 @@ class Conexion:
 
         except Exception as error:
             print("error datosFactura", error)
+
+    @staticmethod
+    def deleteInvoice(fact):
+        try:
+            query = QtSql.QSqlQuery()
+            query.prepare("DELETE FROM invoices WHERE idfact = :fact")
+            query.bindValue(":fact", int(fact))
+            if query.exec():
+                return True
+            else:
+                return False
+
+        except Exception as error:
+            print("error deleteInvoice Conexion", error)
