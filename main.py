@@ -52,6 +52,7 @@ class Main(QtWidgets.QMainWindow):
         globals.ui.actionCustomers.triggered.connect(Events.exportXlsCustomers)
         globals.ui.actionCustomer_Report.triggered.connect(self.reports.reportCustomers)
         globals.ui.actionProducts_Report.triggered.connect(self.reports.reportProducts)
+        globals.ui.actionStock_Report.triggered.connect(self.reports.reportLowStock)
 
         # Functions line edit
         globals.ui.txtDniCif.editingFinished.connect(Customers.checkDni)

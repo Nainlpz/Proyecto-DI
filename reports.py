@@ -248,6 +248,13 @@ class Reports:
                 globals.report.drawString(x + 420, y, str(data[6]))
                 y = y - 25
 
+            globals.report.line(35, y, 525, y)
+            y -= 25
+            globals.report.setFont("Helvetica-Bold", 8)
+            globals.report.drawRightString(510, y, "Subtotal:   " + globals.ui.lblSubtotal.text())
+            globals.report.drawRightString(510, y - 20, "IVA:    " + globals.ui.lblIVA.text())
+            globals.report.drawRightString(510, y - 40, "Total:   " + globals.ui.lblTotal.text())
+
             Reports.topReport(titulo)
             Reports.footer(titulo)
             globals.report.save()
@@ -259,6 +266,72 @@ class Reports:
 
         except Exception as error:
             print("error ticket", error)
+
+    @staticmethod
+    def reportLowStock(self):
+        try:
+            rootPath = ".\\reports"
+            if not os.path.exists(rootPath):
+                os.makedirs(rootPath)
+            data = datetime.today().strftime("%Y_%m_%d_%H_%M_%S")
+            namereportpro = data + "_reportLowStock.pdf"
+            pdf_path = os.path.join(rootPath, namereportpro)
+            globals.report = canvas.Canvas(pdf_path)
+            titulo = "Productos con Stock menor a 5"
+            Reports.footer(titulo)
+            Reports.topReport(titulo)
+
+            all_products = Conexion.listProducts()
+            records = [p for p in all_products if int(p[2]) < 5]
+
+            if not records:
+                print("No hay productos con stock bajo")
+                return
+
+            items = ["ID", "NAME", "FAMILY", "STOCK", "PRICE UNIT"]
+            globals.report.setFont("Helvetica-Bold", 10)
+            globals.report.drawString(60, 650, str(items[0]))
+            globals.report.drawString(165, 650, str(items[1]))
+            globals.report.drawString(310, 650, str(items[2]))
+            globals.report.drawString(390, 650, str(items[3]))
+            globals.report.drawString(460, 650, str(items[4]))
+            globals.report.line(35, 645, 525, 645)
+            x = 55
+            y = 630
+
+            for record in records:
+                if y <= 90:  # Salto de página
+                    globals.report.setFont("Helvetica-Oblique", 8)
+                    globals.report.drawString(450, 75, "Página siguiente...")
+                    globals.report.showPage()
+                    Reports.footer(titulo)
+                    Reports.topReport(titulo)
+                    globals.report.setFont("Helvetica-Bold", 10)
+                    globals.report.drawString(60, 650, str(items[0]))
+                    globals.report.drawString(165, 650, str(items[1]))
+                    globals.report.drawString(310, 650, str(items[2]))
+                    globals.report.drawString(390, 650, str(items[3]))
+                    globals.report.drawString(460, 650, str(items[4]))
+                    globals.report.line(35, 645, 525, 645)
+                    x = 55
+                    y = 630
+
+                globals.report.setFont("Helvetica-Bold", 8)
+                globals.report.drawCentredString(x + 10, y, str(record[0]))
+                globals.report.drawString(x + 110, y, str(record[1]))
+                globals.report.drawString(x + 255, y, str(record[3]))
+                globals.report.drawString(x + 350, y, str(record[2]))
+                globals.report.drawRightString(x + 440, y, str(record[4]) + "€")
+                y = y - 25
+
+            globals.report.save()
+            try:
+                os.startfile(pdf_path)
+            except Exception as e:
+                print("No se pudo abrir el PDF:", e)
+
+        except Exception as error:
+            print("error en reportLowStock", error)
 
 
 

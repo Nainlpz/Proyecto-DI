@@ -10,8 +10,6 @@ import shutil
 from datetime import datetime
 #from venAux import About
 import zipfile
-
-from invoice import Invoice
 from window import *
 
 
@@ -126,7 +124,7 @@ class Events:
         try:
             data = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
             filename = str(data) + "_backup.zip"
-            directory, file = globals.dlgOpen.getSaveFileName(None, "Save Backup File", filename, 'zip')
+            directory, file = globals.dlgOpen.getSaveFileName(None, "Save Backup File", filename, '.zip')
             if globals.dlgOpen.accept and file:
                 print(directory)
                 filezip = zipfile.ZipFile(file, 'w')
@@ -145,25 +143,37 @@ class Events:
 
     def restoreBackup(self):
         try:
-            filename = globals.dlgOpen.getOpenFileName(None, "Restore Backup File", '', '*.zip;;ALl Files (*)')
-            file = filename[0]
-            if file:
-                with zipfile.ZipFile(file, 'r') as bbdd:
-                    bbdd.extractall(pwd='./data')
-                    shutil.move('bbdd.sqlite', './data')
-                bbdd.close()
+            filename, _ = globals.dlgOpen.getOpenFileName(None, "Restore Backup File", '', '*.zip;;All Files (*)')
+
+            if filename:
+                try:
+                    if conexion.Conexion.db_conexion():
+                        conexion.Conexion.db_conexion.close()
+                except:
+                    pass
+
+                with zipfile.ZipFile(filename, 'r') as bbdd:
+                    bbdd.extractall(path='./data')
+
+                conexion.Conexion.db_conexion(self)
+
+                Events.loadProv(self)
+
+                import invoice
+                import products
+
+                customers.Customers.loadTableCli(self)
+                products.Products.loadTableProducts(self)
+                invoice.Invoice.loadTableInvoice(self)
+
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
-                mbox.setWindowIcon(QtGui.QIcon('./img/logo.ico'))
                 mbox.setWindowTitle("Restore Backup")
-                mbox.setText("Restore Backup Done")
-                mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+                mbox.setText("Database successfully restored.")
                 mbox.exec()
-                conexion.Conexion.db_conexion(self)
-                Events.loadProv(self)
-                customers.Customers.loadTableCli(self)
+
         except Exception as e:
-            print("error restoreBackup: ", e)
+            print("Error en restoreBackup: ", e)
 
     def exportXlsCustomers(self):
         try:

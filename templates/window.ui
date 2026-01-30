@@ -2114,6 +2114,7 @@
     </property>
     <addaction name="actionCustomer_Report"/>
     <addaction name="actionProducts_Report"/>
+    <addaction name="actionStock_Report"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -2204,6 +2205,11 @@
   <action name="actionProducts_Report">
    <property name="text">
     <string>Products Report</string>
+   </property>
+  </action>
+  <action name="actionStock_Report">
+   <property name="text">
+    <string>Stock Report</string>
    </property>
   </action>
  </widget>

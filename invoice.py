@@ -479,21 +479,26 @@ class Invoice:
 
                 for row_index, sale_row in enumerate(data):
                     for col_index, cell_value in enumerate(sale_row):
-                        table_item = QtWidgets.QTableWidgetItem(
-                            str(cell_value)
-                        )
-                        table.setItem(
-                            row_index, col_index, table_item
-                        )
+                        table_item = QtWidgets.QTableWidgetItem(str(cell_value))
 
-                        btn_del = QtWidgets.QPushButton()
-                        btn_del.setIcon(QIcon("./img/basura.png"))
-                        btn_del.setIconSize(QtCore.QSize(26, 26))
-                        btn_del.setFixedSize(32, 32)
-                        btn_del.setStyleSheet("border: none; background-color: transparent")
-                        btn_del.clicked.connect(Invoice.deleteSales)
+                        # Alineaciones por columna
+                        if col_index in (0, 2, 3):
+                            table_item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+                        elif col_index == 1:
+                            table_item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
+                        elif col_index == 4:
+                            table_item.setTextAlignment(QtCore.Qt.AlignmentFlag.AlignRight | QtCore.Qt.AlignmentFlag.AlignVCenter)
 
-                        table.setCellWidget(row_index, 5, btn_del)
+                        table.setItem(row_index, col_index, table_item)
+
+                    btn_del = QtWidgets.QPushButton()
+                    btn_del.setIcon(QIcon("./img/basura.png"))
+                    btn_del.setIconSize(QtCore.QSize(26, 26))
+                    btn_del.setFixedSize(32, 32)
+                    btn_del.setStyleSheet("border: none; background-color: transparent")
+                    btn_del.clicked.connect(Invoice.deleteSales)
+
+                    table.setCellWidget(row_index, 5, btn_del)
 
                 Invoice.bloquearTablaSales()
 
@@ -527,7 +532,7 @@ class Invoice:
 
             if Conexion.existeFacturaSales(fact):
                 mbox = QtWidgets.QMessageBox()
-                mbox.setIcon(QtWidgets.QMessageBox.Icon.Information)
+                mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
                 mbox.setWindowTitle("Can't delete Invoice")
                 mbox.setText("This invoice have sales it can't be deleted.")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
@@ -569,8 +574,8 @@ class Invoice:
             if Conexion.existeFacturaSales(fact):
                 mbox = QtWidgets.QMessageBox()
                 mbox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
-                mbox.setWindowTitle("No permitido")
-                mbox.setText("Esta factura ya está guardada y no se pueden borrar líneas.")
+                mbox.setWindowTitle("Can't delete")
+                mbox.setText("This sale it's just saved you can't delete it")
                 mbox.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
                 mbox.exec()
                 return

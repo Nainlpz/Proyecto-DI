@@ -19,15 +19,15 @@ class Conexion:
         """
 
 
-        """
-                APP_NAME = "SuperTeis"
-                ruta_db = os.path.join(
-                    os.getenv('LOCALAPPDATA'),
-                    APP_NAME,
-                    "data",
-                    "bbdd.sqlite"
-                )
-        """
+
+        #APP_NAME = "SuperTeis"
+        #ruta_db = os.path.join(
+            #os.getenv('LOCALAPPDATA'),
+            #APP_NAME,
+            #"data",
+            #"bbdd.sqlite"
+        #)
+
         ruta_db = './data/bbdd.sqlite'
 
         if not os.path.isfile(ruta_db):

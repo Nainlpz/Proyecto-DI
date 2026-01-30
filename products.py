@@ -36,7 +36,7 @@ class Products:
                 globals.ui.tblProductList.item(index, 0).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
                 globals.ui.tblProductList.item(index, 1).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignVCenter)
                 globals.ui.tblProductList.item(index, 2).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignCenter.AlignCenter)
-                globals.ui.tblProductList.item(index, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignRight.AlignRight)
+                globals.ui.tblProductList.item(index, 3).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignLeft.AlignRight)
                 globals.ui.tblProductList.item(index, 4).setTextAlignment(QtCore.Qt.AlignmentFlag.AlignRight.AlignRight)
 
                 index += 1
