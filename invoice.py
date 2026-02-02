@@ -448,6 +448,7 @@ class Invoice:
                     )
 
                     if mbox.exec() == QtWidgets.QMessageBox.StandardButton.Ok:
+                        Reports.ticket(self)
                         Invoice.bloquearTablaSales()
                         globals.linesales.clear()
                         globals.ui.tblSales.setRowCount(0)

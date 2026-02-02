@@ -72,19 +72,24 @@ class Customers:
         :type email: basestring
         """
         try:
-            globals.ui.txtDniCif.editingFinished.disconnect(Customers.checkEmail)
-            regex = r'[\w\.-]+@[\w\.-]+\.\w+$'
-            if re.match(regex, email):
+            try:
+                globals.ui.txtEmailCli.editingFinished.disconnect()
+            except TypeError:
+                pass
+
+            regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+
+            if email and re.match(regex, email):
                 globals.ui.txtEmailCli.setStyleSheet('background-color: rgb(255, 255, 220);')
             else:
                 globals.ui.txtEmailCli.setStyleSheet('background-color: #FFC0CB;')
-                globals.ui.txtEmailCli.setText(None)
+                globals.ui.txtEmailCli.setText("")
                 globals.ui.txtEmailCli.setPlaceholderText("Invalid Email")
-                #globals.ui.txtEmailCli.setFocus()
+
         except Exception as error:
-            print("error en validar email ", error)
+            print(f"Error crítico en validar email: {error}")
         finally:
-            globals.ui.txtEmailCli.editingFinished.connect(Customers.checkEmail)
+            globals.ui.txtEmailCli.editingFinished.connect(lambda: Customers.checkEmail(globals.ui.txtEmailCli.text()))
 
     @staticmethod
     def checkMobile(number):
